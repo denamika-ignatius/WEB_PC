@@ -1,0 +1,22 @@
+::ng-deep #gridContainerCustom {
+    height: 100%;
+}
+
+::ng-deep #gridContainerCustom .dx-datagrid .dx-datagrid-header-panel{
+    background-color:rgb(38,38,38);
+}
+::ng-deep #gridContainerCustom .dx-datagrid .dx-datagrid-header-panel .dx-toolbar{
+    background-color:rgb(38,38,38);
+}
+
+::ng-deep #gridContainerCustom .dx-radiogroup-horizontal .dx-radiobutton{
+    margin-right:50px;
+}
+
+::ng-deep #gridContainerCustom .dx-toolbar .dx-toolbar-items-container{
+    height:40px;
+}
+
+::ng-deep #gridContainerCustom .dx-toolbar .dx-toolbar-items-container .dx-widget input{
+    text-align: right;
+}

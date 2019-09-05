@@ -1,0 +1,269 @@
+<div fxLayout='column' fxFill style="background-color: #262626; border-bottom: solid 3px #C0C0C0;" >     <!--Container-->
+    <!--Start Creating Header-->
+    <div fxFlex ="100%" fxFill>
+        <!--Start Column 1-->
+        <div fxLayout='row' fxFill>
+             <div fxFlex ="calc(100%-450px)" fxFill >  
+                    <div fxLayout='row' fxFill fxLayoutAlign ="start center">
+                            <dx-button 
+                                id="headerBuy"
+                                type="danger"
+                                stylingMode="text"
+                                text="Buy"
+                                (onClick)="x('buy')"
+                                [template]="'buttonTemplate'">
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+                                    <img src="/assets/button/buy.png" height="auto" width="auto"  > 
+                                </div> 
+                            </dx-button>  
+                            &nbsp;
+                            <dx-button
+                                id="headerSell"
+                                type="success"
+                                stylingMode="text"
+                                text="Sell"
+                                (onClick)="x('sell')"
+                                [template]="'buttonTemplate'">
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+                                    <img src="/assets/button/sell.png" height="auto" width="auto" > 
+                                </div> 
+                            </dx-button>
+                            &nbsp;
+                            <dx-button
+                                id="headerOrder"
+                                type="default"
+                                stylingMode="text"
+                                text="Order Status"
+                                (onClick)="x('order status')"
+                                [template]="'buttonTemplate'">
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+                                    <img src="/assets/button/order.png" height="48px" width="48px" > 
+                                </div> 
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/myAccount')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="myAccount" >
+                                    <div *ngIf=" isActiveMenu('/myAccount') !== true">
+                                        <img src= "../../assets/button/MyAccount.png" alt="My Account" height="auto" width="auto" style="padding: 0;"/>
+                                    </div> 
+                                    <div *ngIf=" isActiveMenu('/myAccount') == true"> 
+                                        <img src= "../../assets/button/MyAccount2.png" alt="My Account" height="auto" width="auto" style="padding: 0;"/>
+                                    </div> 
+                                </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/marketInfo') "                                   
+                                [template]="'buttonTemplate'"
+                                > 
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="marketInfo">
+                                        <div *ngIf=" isActiveMenu('/marketInfo') !== true">
+                                            <img src= "../../assets/button/MarketInfo2.png" alt="Market Info" height="auto" width="auto" style="padding: 0;"/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/marketInfo') == true"> 
+                                            <img src= "../../assets/button/MarketInfo.png" alt="Market Info" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/quotes')"
+                                [template]="'buttonTemplate'"                  
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="quote">
+                                        <div *ngIf=" isActiveMenu('/quotes') !== true">
+                                            <img src= "../../assets/button/Quote.png" alt="Quotes" height="auto" width="auto" style="padding: 0;"/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/quotes') == true"> 
+                                            <img src= "../../assets/button/Quote2.png" alt="Quotes" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/ranking')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="ranking">
+                                        <div *ngIf=" isActiveMenu('/ranking') !== true">
+                                            <img src= "../../assets/button/Ranking.png" alt="Ranking" height="auto" width="auto" style="padding: 0;" />
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/ranking') == true"> 
+                                            <img src= "../../assets/button/Ranking2.png" alt="Ranking" height="auto" width="auto" style="padding: 0;" />
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/stockSummary')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="stockSummary">
+                                        <div *ngIf=" isActiveMenu('/stockSummary') !== true" >
+                                            <img src= "../../assets/button/StockSummary.png" alt="Stock Summary" height="auto" width="auto" style="padding: 0;"/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/stockSummary') == true"> 
+                                            <img src= "../../assets/button/StockSummary2.png" alt="Stock Summary" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/brokerSummary')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="brokerSummary" >
+                                    <div *ngIf=" isActiveMenu('/brokerSummary') !== true">
+                                        <img src= "../../assets/button/BrokerSummary.png" alt="Broker Summary" height="auto" width="auto" style="padding: 0;"/>
+                                    </div> 
+                                    <div *ngIf=" isActiveMenu('/brokerSummary') == true"> 
+                                        <img src= "../../assets/button/BrokerSummary2.png" alt="Broker Summary"  height="auto" width="auto" style="padding: 0;"/>
+                                    </div>                                 
+                                </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/news')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="news" >
+                                        <div *ngIf=" isActiveMenu('/news') !== true">
+                                            <img src= "../../assets/button/News.png" alt="News"  height="auto" width="auto" style="padding: 0;"/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/news') == true"> 
+                                            <img src= "../../assets/button/News2.png" alt="News" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/analysis')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'"  class="chart" >
+                                        <div *ngIf=" isActiveMenu('/analysis') !== true">
+                                            <img src= "../../assets/button/Chart.png" alt="Chart" height="auto" width="auto" style="padding: 0;" />
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/analysis') == true"> 
+                                            <img src= "../../assets/button/Chart2.png" alt="Chart" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                
+                                </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickSelectMenu('/option')"
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'" class="option">
+                                        <div *ngIf=" isActiveMenu('/option') !== true" >
+                                            <img src= "../../assets/button/Options.png" alt="Options" height="auto" width="auto" style="padding: 0; "/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/option') == true"> 
+                                            <img src= "../../assets/button/Options2.png" alt="Options" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 </div>
+                            </dx-button>
+                            <dx-button
+                                id="menuHeader"
+                                stylingmode="text"
+                                type="Text"
+                                (onClick)="clickLogout()" 
+                                [template]="'buttonTemplate'"
+                                >
+                                <div *dxTemplate="let buttonData of 'buttonTemplate'" class="logout">
+                                        <div *ngIf=" isActiveMenu('/logout') !== true">
+                                            <img src= "../../assets/button/Logout.png" alt="Logout" height="auto" width="auto" style="padding: 0;"/>
+                                        </div> 
+                                        <div *ngIf=" isActiveMenu('/logout') == true"> 
+                                            <img src= "../../assets/button/Logout2.png" alt="Logout" height="auto" width="auto" style="padding: 0;"/>
+                                        </div>                                 
+                                    </div>
+                            </dx-button> 
+                    </div>                           
+            </div>    
+            <!--End Collom 1 -->  
+            <!--Start Collom 2 --> 
+            <div fxFlex ="450px" fxFill style="padding-top: 5px; float: right; ">
+                <div fxLayout  ="row" fxFill >
+                    <div fxFLex ="50px" fxLayoutAlign ="end center" >
+                        <img src="../../assets/PC_Logo.png" alt="ketradeIcon" style =" width: 35px; height: 35px;" >
+                    </div>
+                    <div fxFlex ="calc(100%-50px)" fxFill style="padding-left: 5px">
+                        <div fxLayout ='column' fxFill>
+                            <div fxFlex = 25% fxFill>
+                                <div fxLayout='row' fxLayoutAlign ="end" fxFill >
+                                    <div fxFlex ="100%" fxFill style="text-align: left; font-family: 'Tahoma';">
+                                        <a style="font-family: 'Tahoma'; font-size: 10px;"> {{serverDateTime}} | 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'PreOpen' ">Pre-Opening |</a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'EndPreOpen' ">End Of Pre-Opening |</a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'Session-1' "> 1<sup>st</sup> Session | </a>
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'BREAK' "> BREAK | </a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'Session-2' "> 2<sup>nd</sup> Session | </a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'Pre-Closing' ">Pre-Closing |</a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'End-of-2ndSession' ">End of 2<sup style = "font-size: 0.6em; font-weight: 100; ">nd</sup> Session |</a>
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'Post-Trading' ">Post Trading |</a> 
+                                            <a style="font-family: 'Tahoma'; font-size: 10px; padding-top: 0px;" *ngIf= "marketstatus == 'CLOSE' "> Market Closed |</a> 
+                                            <a style="font-family: 'Tahoma'; font-weight: bold; font-size: 10px; padding-right: 5px; padding-left: 5px;">M : </a>
+                                            <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" 
+                                            style="width: 10px; height: 10px;" [ngClass]="global.getStatusBoxColor(true)"><a style="padding-left: 5px;"> | </a>
+                                            <a style="font-family: 'Tahoma'; font-weight: bold; font-size: 10px;padding-right: 5px; padding-left: 5px;">R : </a> 
+                                            <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" 
+                                            style="width: 10px; height: 10px; " [ngClass]="global.getStatusBoxColor(remoteStatus)" > 
+                                        </a> 
+                                    </div>
+                                </div> 
+                            </div>
+                            <div fxFLex ="25%" >
+                                <div fxLayout='row' fxLayoutAlign ="start" fxFill >
+                                    <div fxFlex="30%" fxFill>
+                                        <a class="text-tahoma">Customer Service.</a>
+                                    </div>
+                                    <div fxFlex="70%" fxFill>
+                                        <a class="text-tahoma">+6221 727 99 888 Ext 800, 801, 802, 803</a>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div fxFLex ="25%">
+                                <div fxLayout='row' fxLayoutAlign ="start" fxFill >
+                                    <div fxFlex="30%" fxFill>
+                                        <a class="text-tahoma">Help Desk.</a>
+                                    </div>
+                                    <div fxFlex="70%" fxFill>
+                                        <a class="text-tahoma">+6221 727 99 888 Ext 700, 701, 702</a>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div fxFLex ="25%">
+                                <div fxLayout='row' fxLayoutAlign ="start" fxFill >
+                                    <div fxFlex="30%" fxFill>
+                                        <a class="text-tahoma">Fax.</a>
+                                    </div>
+                                    <div fxFlex="70%" fxFill>
+                                        <a class="text-tahoma">+6221 571 0895</a>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+            </div>    
+            <!--End Collom 2 -->       
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,752 @@
+<div fxLayout='column' fxFill >
+    <div fxFlex="70px " fxFill> 
+        <app-header></app-header>
+      </div>
+  <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: black"> 
+    <div fxLayout='row' fxFill >
+      <div fxFlex="35%" fxFill style= "border-right: solid 3px #404040 ;"> 
+        <div fxLayout='column' fxFill > 
+          <div fxFlex="30px" fxFill > 
+ 
+            <dx-select-box  
+              [inputAttr]="{ id: getId(), class:global.setColorStock(stockInput['code']) }"
+              (onOpened)="box1_onFocus($event)"
+              (onFocusIn)="box1_onOpened($event)"
+              [dataSource]="dsStockList"
+              [(value)]="stockInput['codeNboard']" 
+              (onValueChanged)="box1_onChange($event)"
+              placeholder="Enter Code Here"
+              displayExpr="ProductFullName"
+              valueExpr="ProductCodeBoard"
+              spellcheck="true"
+              minSearchLength="0"
+              showDataBeforeSearch="false"
+              [(opened)]="stockInput['isOpen']"
+              searchEnabled="true"
+              searchMode="startswith" 
+              (onFocusOut)="box1_onFocusOut($event)"
+              searchTimeout=0
+              (onEnterKey)="box1_onEnter($event)"
+              itemTemplate="item" 
+              (onKeyDown)="box1_onKeyDown($event)"
+              style="border-top:2px solid #999; border-left:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; padding-left:10px;"
+              > 
+              <div *dxTemplate="let data of 'item'"> 
+                <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+              </div>
+            </dx-select-box>  
+ 
+          </div>
+          <div fxFlex="50px" style="border:2px solid #555; padding-top:3px; padding-bottom:4px;" fxFill> 
+            <div fxLayout='row' fxFill >
+              <div fxFlex="31%" fxFill> 
+                <div fxLayout='column' fxFill >
+                  <div fxFlex="33% " fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="35px" fxLayout='column' fxFill style="padding-left: 5px;color:rgb(170,170,170);">
+                        Last
+                      </div>
+                      <div fxFlex="calc(100%-35px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                          <span [ngClass]="global.colorFormat(stockData.Chg)">{{global.numberFormat(stockData.Last,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill>
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="35px" fxLayout='column' fxFill style="padding-left: 5px;color:rgb(170,170,170);">
+                        Chg
+                      </div>
+                      <div fxFlex="calc(100%-35px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                        <span [ngClass]="global.colorFormat(stockData.Chg)">{{stockData.ChgDisplay}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill>
+                    <div fxLayout='row' fxFill >
+                        <div fxFlex="50px" fxLayout='column' fxFill style="padding-left: 5px;color:rgb(170,170,170);">
+                          Vol
+                        </div>
+                        <div fxFlex="calc(100%-50px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;color:rgb(170,170,170);">
+                            <span>{{global.numberFormat(stockData.LastTradedLot,0)}}</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="21%" style="padding-left:4px;" fxFill> 
+                <div fxLayout='column' fxFill >
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxLayout='column' fxFill>
+                        Open
+                      </div>
+                      <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;color:rgb(170,170,170);">
+                        <span [ngClass]="global.colorFormat(stockData.OpenPrice-stockData.Prev)">{{global.numberFormat(stockData.Open,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxFill> 
+                        High
+                      </div>
+                      <div fxFlex="55%" fxFill style="text-align: end; padding-right: 5px;"> 
+                        <span [ngClass]="global.colorFormat(stockData.HighPrice-stockData.Prev)">{{global.numberFormat(stockData.High,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxFill> 
+                        Low
+                      </div>
+                      <div fxFlex="55%" fxFill style="text-align: end; padding-right: 5px;"> 
+                        <span [ngClass]="global.colorFormat(stockData.LowPrice-stockData.Prev)">{{global.numberFormat(stockData.Low,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="23%" style="padding-left:4px;" fxFill> 
+                <div fxLayout='column' fxFill >
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxFill> 
+                        TFreq
+                      </div>
+                      <div fxFlex="55%" fxFill style="text-align: end; padding-right: 5px;color:rgb(170,170,170);"> 
+                        {{global.kmbtFormat(stockData.TFreq,2)}}
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxFill> 
+                        Close
+                      </div>
+                      <div fxFlex="55%" fxFill style="text-align: end; padding-right: 5px;"> 
+                        <span [ngClass]="global.colorFormat(0)">{{global.numberFormat(stockData.Close,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="45%" style="color:rgb(170,170,170);" fxFill> 
+                        WAP
+                      </div>
+                      <div fxFlex="55%" fxFill style="text-align: end; padding-right: 5px;"> 
+                        <span [ngClass]="global.colorFormat(stockData.AveragePrice-stockData.Prev)">{{global.numberFormat(stockData.WAP,0)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="25%" style="padding-left:4px;" fxFill> 
+                <div fxLayout='column' fxFill >
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="40px" style="color:rgb(170,170,170);" fxFill> 
+                        TVal
+                      </div>
+                      <div fxFlex="calc(100%-40px)" fxFill style="text-align: end; padding-right: 5px;color:rgb(170,170,170);"> 
+                        {{global.kmbtFormat(stockData.TVal,2)}}
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="38px" style="color:rgb(170,170,170);" fxFill> 
+                        B(%)
+                      </div>
+                      <div fxFlex="calc(100%-38px)" fxFill style="text-align: end; padding-right: 5px;"> 
+                        <span [ngClass]="global.colorPercent(stockData['BPercent'])">{{global.numberFormat(stockData['BPercent'],2)}} %</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="33%" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="40px" style="color:rgb(170,170,170);" fxFill> 
+                        TVol
+                      </div>
+                      <div fxFlex="calc(100%-40px)" fxFill style="text-align: end; padding-right: 5px;color:rgb(170,170,170);"> 
+                        {{global.kmbtFormat(stockData.TVol,2)}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="calc(100%-50px-30px)" fxFill> 
+            <div fxLayout='column' fxFill >
+              <div fxFlex="50%" fxFill> 
+                  <dx-data-grid 
+                  id="gridContainerSmallHeader"
+                  [showRowLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="orderBookData"
+                  [allowColumnResizing]="true"
+                  [rowAlternationEnabled]="true" 
+                  [showBorders]="false"
+                  height="100%">   
+ 
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.text-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                    <div>{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateYellowNumber'">
+                    <div [ngClass]="global.colorFormat(0)">{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting>
+                  <dxi-column dataField="BidVol" caption="B#" cellTemplate="cellTemplateNumber"  ></dxi-column>
+                  <dxi-column dataField="BidLotChange" caption="" cellTemplate="cellTemplateNumberColor"></dxi-column>
+                  <dxi-column dataField="BidLot" caption="BLot" cellTemplate="cellTemplateYellowNumber"></dxi-column>
+                  <dxi-column dataField="BidPrice" caption="Bid" cellTemplate="cellTemplatePrice"></dxi-column>
+                  <dxi-column dataField="OfferPrice" caption="Offer" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="OfferLot" caption="OLot" cellTemplate="cellTemplateYellowNumber"></dxi-column> 
+                  <dxi-column dataField="OfferLotChange" caption="" cellTemplate="cellTemplateNumberColor"></dxi-column>
+                  <dxi-column dataField="OfferVol" caption="O#" cellTemplate="cellTemplateNumber"></dxi-column> 
+ 
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.text-stockData.Prev)">{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                    <div style = "color:rgb(170,170,170);" >{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateYellowNumber'">
+                    <div [ngClass]="global.colorFormat(0)">{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNumberColor'">
+                    <div [ngClass]="global.colorFormat(cell.text)">{{global.numberSignFormat(cell.text,0)}}</div> 
+                  </div>
+                </dx-data-grid>       
+              </div>
+              <div fxFlex="50%" fxFill> 
+                  <dx-data-grid 
+                  id="gridContainerSmallHeader"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="tradeBookData"
+                  [showBorders]="false"
+                  height="100%">   
+                  
+                  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting>
+                  <dxi-column dataField="Price" caption="Price" cellTemplate="cellTemplatePrice"></dxi-column>
+                  <dxi-column dataField="Freq" caption="TFreq" cellTemplate="cellTemplateNumber"></dxi-column> 
+                  <dxi-column dataField="BLot" caption="BVol" cellTemplate="cellTemplateNumber"></dxi-column>
+                  <dxi-column dataField="SLot" caption="SVol" cellTemplate="cellTemplateNumber"></dxi-column>
+                  <dxi-column dataField="Lot" caption="Vol" cellTemplate="cellTemplateNumber"></dxi-column> 
+                  <dxi-column dataField="BFreq" caption="BFreq" cellTemplate="cellTemplateBuy"></dxi-column> 
+                  <dxi-column dataField="SFreq" caption="SFreq" cellTemplate="cellTemplateSell"></dxi-column> 
+                  
+
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.text-stockData.Prev)">{{global.numberFormat0(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                    <div style = "color:rgb(170,170,170);" >{{global.numberFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate = "let cell of 'cellTemplateBuy'">
+                    <div [ngClass] ="global.colorFormat(1)"> {{cell.text}} </div>
+                  </div>
+                  <div *dxTemplate = "let cell of 'cellTemplateSell'">
+                    <div [ngClass] ="global.colorFormat(-1)"> {{cell.text}} </div>
+                  </div>
+                </dx-data-grid>       
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="65%" fxFill> 
+        <div fxLayout='column' fxFill >
+          <div fxFlex="45px" fxFill> 
+            <dx-tabs  #apiTabs
+              [items]="tabs"
+              [selectedIndex]="0"
+              (onItemClick)="clickSelectTab($event)"
+              itemTemplate="listItem"
+              height="100%"
+              width="60%"
+              class="custom-tabs"
+            >
+            <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index">
+                <div *ngIf="selectTab==itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+                <div *ngIf="selectTab!=itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+              </div> 
+            </dx-tabs>
+            <div fxFlex="40%" style="display: inline-block; height:100%; padding:6px 0px; background-color:rgb(45,45,45); text-align:right; padding-right:10px;">
+              <div *ngIf="selectTab=='Summary'">
+                <dx-date-box
+                    displayFormat="d MMM yyyy"
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [(value)]="summary_startDate"
+                    (onValueChanged)="dateBoxStart_valueChanged($event)"
+                    style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff;  display:inline-block; height:100%; background-color:black; padding-left: 5px; "
+                >
+                </dx-date-box> 
+                <div style="display:inline-block;">&nbsp;&nbsp;To&nbsp;&nbsp;</div> 
+                <dx-date-box
+                    displayFormat="d MMM yyyy"
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [(value)]="summary_endDate"
+                    (onValueChanged)="dateBoxEnd_valueChanged($event)"
+                    style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px; margin-right: 2px;"
+                >
+                </dx-date-box>
+              </div>
+              <div *ngIf="selectTab=='Trade History'">
+                <div fxLayout= 'row' fxLayoutAlign ="start">
+                    <div fxFlex="60%" fxFill>
+                      <a style="margin-right: 3px;"> As of date </a>
+                      <dx-date-box
+                      displayFormat="d MMM yyyy"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [(value)]="tradeHistory_startDate"
+                      (onValueChanged)="dateBoxStart_valueChanged($event)"
+                      style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px;"
+                      >
+                      </dx-date-box>
+                  </div>  
+                  <div fxFlex ="40%" fxFill>
+                      <dx-button
+                        style = "background-color: #8497b0;"
+                        type = "Text"
+                        text = "More"
+                        (onClick) ="moreClickedTradeHistory($event)">
+                      </dx-button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="selectTab=='History'">
+                <dx-date-box
+                    displayFormat="d MMM yyyy"
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [(value)]="history_startDate"
+                    (onValueChanged)="dateBoxStart_valueChanged($event)"
+                    style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px;"
+                >
+                </dx-date-box> 
+                <div style="display:inline-block;">&nbsp;&nbsp;To&nbsp;&nbsp;</div> 
+                <dx-date-box
+                    displayFormat="d MMM yyyy"
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [(value)]="history_endDate"
+                    (onValueChanged)="dateBoxEnd_valueChanged($event)"
+                    style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px;"
+                >
+                </dx-date-box>
+              </div>
+              <div *ngIf="selectTab=='Foreign History'">
+                  <dx-date-box
+                      displayFormat="d MMM yyyy"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [(value)]="foreignHistory_startDate"
+                      (onValueChanged)="dateBoxStart_valueChanged($event)"
+                      style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px;"
+                  >
+                  </dx-date-box> 
+                  <div style="display:inline-block;">&nbsp;&nbsp;To&nbsp;&nbsp;</div> 
+                  <dx-date-box
+                      displayFormat="d MMM yyyy"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [(value)]="foreignHistory_endDate"
+                      (onValueChanged)="dateBoxEnd_valueChanged($event)"
+                      style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px;"
+                  >
+                  </dx-date-box>
+                </div>
+                <div *ngIf="selectTab=='Trade Detail'">
+                  <dx-button
+                    style = "background-color: #8497b0;"
+                    type = "Text"
+                    text = "More"
+                    (onClick) ="moreClickedTradeDetail($event)">
+                </dx-button>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="calc(100%-45px)" fxFill *ngIf="selectTab=='Summary'">  
+            <div fxLayout='column' fxFill >
+              <div fxFlex="100%"  fxFill> 
+                  <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainer"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="summaryData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparingSummary($event)"
+                  height="100%">     
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting> 
+                  <!-- <dxi-column dataField="No" caption="No" [allowReordering]="false"></dxi-column>  -->
+                  <dxi-column dataField="BrokerCode" caption="Code" cellTemplate="cellTemplateBroker"></dxi-column> 
+                  <dxi-column dataField="BrokerName" caption="Name" cellTemplate="cellTemplateBroker" [visible]="false"></dxi-column> 
+                  <dxi-column dataField="BuyValue" caption="BVal" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                  <dxi-column dataField="BuyLot" caption="BVol" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                  <dxi-column dataField="BuyFreq" caption="BFreq" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                  <dxi-column dataField="SellValue" caption="SVal" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                  <dxi-column dataField="SellLot" caption="SVol" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                  <dxi-column dataField="SellFreq" caption="SFreq" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                  <dxi-column dataField="NetValue" caption="NVal" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                  <dxi-column dataField="NetLot" caption="NVol" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                  <dxi-column dataField="NetFreq" caption="NFreq" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                  <dxi-column dataField="TotalValue" caption="TVal" cellTemplate="cellTemplateTKMBT"></dxi-column> 
+                  <dxi-column dataField="TotalLot" caption="TVol" cellTemplate="cellTemplateTKMBT"></dxi-column> 
+                  <dxi-column dataField="TotalFreq" caption="TFreq" cellTemplate="cellTemplateTKMBT" ></dxi-column> 
+
+                  <div *dxTemplate="let cell of 'cellTemplateBroker'">
+                    <div [ngClass]="global.colorBrokerCode(cell.data.BrokerCode)">{{cell.text}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateTKMBT'">
+                    <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBKMBT'">
+                    <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateSKMBT'">
+                    <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNKMBT'">
+                    <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                </dx-data-grid>    
+              </div> 
+            </div>
+          </div>
+          <div fxFlex="calc(100%-45px)" fxFill *ngIf="selectTab=='Trade Detail'">
+            <div fxLayout='column' fxFill >
+                <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainer"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="false"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="tickTradeData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparingTickTrade($event)"
+                  height="100%">           
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting>  
+                  <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+                  <dxi-column dataField="TradeTimeDisplay" alignment="center" caption="Time" cellTemplate = "cellTemplateText"  ></dxi-column> 
+                  <dxi-column dataField="TradeNo" alignment="center" caption="TradeNo" cellTemplate = "cellTemplateText"></dxi-column> 
+                  <dxi-column dataField="BuyerType" alignment="center" caption=" " cellTemplate="cellTemplateBrokerType"></dxi-column>
+                  <dxi-column dataField="BrokerBuy" alignment="center" caption="B" cellTemplate="cellTemplateBroker"></dxi-column> 
+                  <dxi-column dataField="BrokerSell" alignment="center" caption="S" cellTemplate="cellTemplateBroker"></dxi-column> 
+                  <dxi-column dataField="SellerType" alignment="center" caption=" " cellTemplate="cellTemplateBrokerType"></dxi-column> 
+                  <dxi-column dataField="Price" caption="Price" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="Change" caption="Chg" cellTemplate="cellTemplateChgPrice"></dxi-column> 
+                  <dxi-column dataField="ChangePercent" caption="(%)" alignment="right" cellTemplate="cellTemplateChgPct"></dxi-column> 
+                  <dxi-column dataField="Lot" caption="Vol" cellTemplate = "cellTemplateText" [width] ="80"></dxi-column> 
+                  <dxi-column dataField="BuyerOrderNo" alignment="center" caption="BOrder#" cellTemplate = "cellTemplateText" ></dxi-column> 
+                  <dxi-column dataField="SellerOrderNo" alignment="center" caption="SOrder#" cellTemplate = "cellTemplateText"  ></dxi-column> 
+                 
+                  <div *dxTemplate="let cell of 'cellTemplateText'">
+                      <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                    </div> 
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChgPct'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChgPrice'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBroker'">
+                    <div [ngClass]="global.colorBrokerCode(cell.text)">{{cell.text}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBrokerType'">
+                    <div [ngClass]="global.setBrokerTypeColor(cell.text)">{{cell.text}}</div> 
+                  </div>
+                  
+                </dx-data-grid>     
+            </div> 
+          </div>
+          <div fxFlex="calc(100%-45px)" fxFill *ngIf="selectTab=='Trade History'">
+             
+              <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: black"> 
+                  <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainer"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="tickTradeHistoryData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparingTradeHistory($event)"
+                  height="100%">           
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting>  
+                  <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+                  <dxi-column dataField="TradeTimeDisplay" alignment="center" caption="Time" cellTemplate = "cellTemplateText"></dxi-column> 
+                  <dxi-column dataField="TradeNo" alignment="center" caption="TradeNo" cellTemplate = "cellTemplateText"></dxi-column> 
+                  <dxi-column dataField="BuyerType" alignment="center" caption=" " cellTemplate="cellTemplateBrokerType"></dxi-column>
+                  <dxi-column dataField="BrokerBuy" alignment="center" caption="B" cellTemplate="cellTemplateBroker"></dxi-column> 
+                  <dxi-column dataField="BrokerSell" alignment="center" caption="S" cellTemplate="cellTemplateBroker"></dxi-column> 
+                  <dxi-column dataField="SellerType" alignment="center" caption=" " cellTemplate="cellTemplateBrokerType"></dxi-column> 
+                  <dxi-column dataField="Price" caption="Price" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="Change" caption="Chg" cellTemplate="cellTemplateChg"></dxi-column> 
+                  <dxi-column dataField="ChangePercent" caption="(%)"  alignment="right"  cellTemplate="cellTemplateChgPct"></dxi-column> 
+                  <dxi-column dataField="Lot" caption="Vol" cellTemplate = "cellTemplateText" ></dxi-column> 
+                  <dxi-column dataField="BuyerOrderNo" alignment="center" caption="BOrder#" cellTemplate = "cellTemplateText" ></dxi-column> 
+                  <dxi-column dataField="SellerOrderNo" alignment="center" caption="SOrder#" cellTemplate = "cellTemplateText" ></dxi-column>
+                  <div *dxTemplate="let cell of 'cellTemplateText'">
+                    <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                  </div> 
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChg'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChgPct'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBroker'">
+                    <div [ngClass]="global.colorBrokerCode(cell.text)">{{cell.text}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBrokerType'">
+                    <div [ngClass]="global.setBrokerTypeColor(cell.text)">{{cell.text}}</div> 
+                  </div>
+                </dx-data-grid>   
+            </div> 
+          </div>
+          <div fxFlex="calc(100%-45px)" fxFill *ngIf="selectTab=='History'">
+            <div fxLayout='column' fxFill >
+              <!-- <div fxFlex="15% 38px 38px" fxFill > 
+                  <div fxLayout='row' fxFill >
+                      <div fxFlex="40% 150px 150px" fxFill> 
+                        <dx-date-box
+                          displayFormat="d MMM yyyy"
+                          [min]="minDate"
+                          [max]="maxDate"
+                          [(value)]="startDate"
+                          (onValueChanged)="dateBox_valueChanged($event)">
+                        </dx-date-box>
+                      </div>
+                      <div fxFlex="10%" fxFill style="padding: 7px;"> 
+                        To
+                      </div>
+                      <div fxFlex="40% 150px 150px" fxFill style="padding-left: 5px;"> 
+                        <dx-date-box
+                          displayFormat="d MMM yyyy"
+                          [min]="minDate"
+                          [max]="maxDate"
+                          [(value)]="endDate"
+                          (onValueChanged)="dateBox_valueChanged($event)">
+                        </dx-date-box>
+                      </div>
+                  </div>
+              </div> -->
+              <div fxFlex="100%" fxFill> 
+                  <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainer"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="historyData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparingHistory($event)"
+                  height="100%">           
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting> 
+                  <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+                  <dxi-column dataField="DateDisplay" alignment="center" caption="Date" cellTemplate = "cellTemplateText" ></dxi-column> 
+                  <dxi-column dataField="LastPrice" caption="Last" cellTemplate="cellTemplatePrice"></dxi-column>
+                  <dxi-column dataField="Change" caption="Chg" cellTemplate="cellTemplateChg"></dxi-column>
+                  <dxi-column dataField="ChangePercent" caption="Chg(%)" cellTemplate="cellTemplateChgPct"></dxi-column>
+                  <dxi-column dataField="OpenPrice" caption="Open" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="HighPrice" caption="High" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="LowPrice" caption="Low" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="PreviousPrice" caption="Close" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="AveragePrice" caption="WAP" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="TotalFreq" caption="TFreq" cellTemplate="cellTemplateTotal"></dxi-column> 
+                  <dxi-column dataField="TotalLot" caption="TVol" cellTemplate="cellTemplateTotal"></dxi-column> 
+                  <dxi-column dataField="TotalValue" caption="TVal" cellTemplate="cellTemplateTotal"></dxi-column>  
+                  <div *dxTemplate="let cell of 'cellTemplateText'">
+                    <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.text-cell.data.PreviousPrice)">{{global.numberFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChg'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateChgPct'">
+                    <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateTotal'">
+                    <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                </dx-data-grid>    
+              </div>
+            </div> 
+          </div>
+          <div fxFlex="calc(100%-45px)" fxFill *ngIf="selectTab=='Foreign History'">
+            <div fxLayout='column' fxFill >
+              <!-- <div fxFlex="15% 38px 38px" fxFill > 
+                  <div fxLayout='row' fxFill >
+                      <div fxFlex="40% 150px 150px" fxFill> 
+                        <dx-date-box
+                          displayFormat="d MMM yyyy"
+                          [min]="minDate"
+                          [max]="maxDate"
+                          [(value)]="startDate"
+                          (onValueChanged)="dateBox_valueChanged($event)">
+                        </dx-date-box>
+                      </div>
+                      <div fxFlex="10%" fxFill style="padding:7px;"> 
+                        To
+                      </div>
+                      <div fxFlex="40% 150px 150px" fxFill style="padding-left: 5px;"> 
+                        <dx-date-box
+                          displayFormat="d MMM yyyy"
+                          [min]="minDate"
+                          [max]="maxDate"
+                          [(value)]="endDate"
+                          (onValueChanged)="dateBox_valueChanged($event)">
+                        </dx-date-box>
+                      </div>
+                  </div>
+              </div> -->
+              <div fxFlex="100%" fxFill> 
+                  <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainer"
+                  [rowAlternationEnabled]="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="true"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="historyData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparingForeignHistory($event)"
+                  height="100%">           
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting> 
+                  <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+                  <dxi-column dataField="DateDisplay" alignment="center" caption="Date" cellTemplate ="cellTemplateText"></dxi-column> 
+                  <dxi-column dataField="LastPrice" caption="Last" cellTemplate="cellTemplatePrice"></dxi-column>
+                  <dxi-column dataField="ForeignBuyLot" caption="Fgn BVol" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                  <dxi-column dataField="ForeignBuyValue" caption="Fgn BVal" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                  <dxi-column dataField="ForeignBuyAvg" caption="Fgn BAvg" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="ForeignSellLot" caption="Fgn SVol" cellTemplate="cellTemplateSKMBT"></dxi-column>  
+                  <dxi-column dataField="ForeignSellValue" caption="Fgn SVal" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                  <dxi-column dataField="ForeignSellAvg" caption="Fgn SAvg" cellTemplate="cellTemplatePrice"></dxi-column> 
+                  <dxi-column dataField="ForeignNetLot" caption="Fgn NVol" cellTemplate="cellTemplateNKMBT"></dxi-column>  
+                  <dxi-column dataField="ForeignNetValue" caption="Fgn NVal" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+
+                  <div *dxTemplate="let cell of 'cellTemplateText'">
+                    <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                    <div [ngClass]="global.colorFormat(cell.text-cell.data.PreviousPrice)">{{global.numberFormat(cell.text,0)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateTotal'">
+                    <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBKMBT'">
+                    <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateSKMBT'">
+                    <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNKMBT'">
+                    <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                </dx-data-grid>    
+              </div>
+            </div> 
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill style = "border-top: solid 1px white;"> 
+    <app-footer></app-footer>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div fxLayout='column'  style="background-color: #262626; border: solid 1px #C0C0C0; padding-left: 5px; padding-right: 5px;">
+    <div fxFlex = "20px" >
+        <div fxLayout = 'row' >
+            <div fxFlex ='100%'>
+                <div fxFlex= "8%" fxFill style="color: yellow">
+                    <a  >JSX</a>
+                </div>
+                <div fxFlex= "8%"  fxFill>
+                    <a [ngClass]="global.colorFormat(compositeDisplay.changeRaw)"> {{compositeDisplay.last}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    <a [ngClass]="global.colorFormat(compositeDisplay.changeRaw)"> {{global.isPlus(compositeDisplay.change)}}  </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    <a [ngClass]="global.colorFormat(compositeDisplay.changeRaw)">  ({{compositeDisplay.percent}}%) </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    O: <a >{{compositeDisplay.open}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    H: <a [ngClass]="global.colorFormat(compositeDisplay.highColorVal)">{{compositeDisplay.high}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    L: <a [ngClass]="global.colorFormat(compositeDisplay.lowColorVal)">{{compositeDisplay.low}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    C: <a > {{compositeDisplay.close}} </a>
+                </div>
+                <div fxFlex= "12%" fxFill>
+                    <a style ="color: yellow">Fgn NVAL: </a> <a [ngClass]="global.colorFormat(compositeDisplay.FNValue)" > {{compositeDisplay.FNValueDisplay}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    <a >  {{compositeDisplay.freq}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill fxLayoutAlign ="center">
+                    <a >  {{compositeDisplay.volume}} </a>
+                </div>
+                <div fxFlex= "8%" fxFill>
+                    <a >  {{compositeDisplay.value}} </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div fxFLex = calc(100%-20px) fxFill>
+        <div fxLayout ='row' fxFill fxLayoutAlign = "none center">
+            <div fxFlex ="75%" fxFill  style="background-color: #262626;">
+                 <ng-marquee duration ="80">
+                     <span *ngFor ="let item of indicies">
+                         {{item.Name}}&nbsp;<span [ngClass]="global.colorFormat(item.ChangeValue)">{{item.Value}} ({{global.numberSignFormat(item.ChangePercent)}}%) &nbsp;&nbsp;&nbsp; </span>
+                     </span>
+                 </ng-marquee>
+            </div>
+            <div fxFLex ="25%" style="background-color: #262626; ">
+                <div fxLayout ='row' fxFill fxLayoutAlign ="center center">
+                    <div fxFLex = 25% >
+                        <img src= "/assets/down.png" alt="down" style="width: 14px; height: 14px; padding-left: 5px;">
+                        <a [ngClass]="global.colorFormat(-1)" style=" padding-right: 5px;"> {{compositeDisplay.down}} </a>
+
+                    </div>
+                    <div fxFLex = 25% >
+                        <img src= "/assets/up.png" alt="up" style="width: 14px; height: 14px; padding-left: 5px;">
+                        <a [ngClass]="global.colorFormat(1)" style=" padding-right: 5px;"> {{compositeDisplay.up}} </a>
+                    </div>
+                    <div fxFLex = 25% >
+                        <img src= "/assets/mid.png" alt="center" style="width: 14px; height: 14px; padding-left: 5px;">
+                        <a style="padding-left: 5px; padding-right: 5px;">{{compositeDisplay.unchange}} </a>
+                    </div>
+                    <div fxFLex ="25%" fxLayoutAlign ="end"  style="background-color: #262626; padding-left: 5px; padding-right: 5px;" >
+                        {{usdIdr.Name}} : <a [ngClass] ="global.colorFormat(usdIdr.ChangePercent)" > {{usdIdr.Value}} </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

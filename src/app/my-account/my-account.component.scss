@@ -1,0 +1,153 @@
+.field-container{
+    background-color:rgb(127,127,127);
+    height:31px;
+    display: inline-block;
+    width:550px;
+    font-family: 'Trebuchet MS';
+    margin-right:50px;
+}
+
+.field-container .field-label{
+    display: inline-block;
+    padding:6px 8px;
+    font-size:14px;
+}
+
+.field-container .field-input{
+    display: inline-block;
+    padding:2px;
+    float:right;
+}
+
+.field-container .field-input .custom{
+    background-color:rgb(38,38,38);
+    width:300px !important;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:28px !important;
+    margin-top:-1px;
+}
+
+.field-container-transparent{
+    
+    height:31px;
+    display: inline-block;
+    width:550px;
+    font-family: 'Trebuchet MS';
+    margin-right:50px;
+}
+
+.field-container-transparent .button-container{
+    display: inline-block;
+    width:550px;
+    text-align:center;
+    margin-top:15px;
+    background-color:rgb(64,64,64);
+}
+
+.field-container-transparent .button-container .button-custom{
+    background-color:rgb(198, 145, 0);
+    color:#fff;
+    font-family: 'Trebuchet MS';
+    font-size: 14px;
+    padding:6px 15px;
+}
+
+
+.field-container-period{
+    background-color:rgb(127,127,127);
+    height:31px;
+    display: inline-block;
+    width:280px;
+    font-family: 'Trebuchet MS';
+    margin-right:20px;
+}
+
+.field-container-period .field-label{
+    display: inline-block;
+    padding:6px 8px;
+    font-size:14px;
+    width:80px;
+}
+
+.field-container-period .field-input{
+    display: inline-block;
+    padding:2px;
+    float: right;
+}
+
+.field-container-period .field-input .custom{
+    background-color:rgb(38,38,38);
+    width:180px !important;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:28px !important;
+    margin-top:-1px;
+}
+.field-container-period .field-input .custom2{
+    background-color:rgb(38,38,38);
+    width:150px !important;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:28px !important;
+    margin-top:-1px;
+}
+
+.field-container-inline{
+    
+    height:31px;
+    display: inline-block;
+    width:150px;
+    font-family: 'Trebuchet MS';
+}
+
+.field-container-inline .button-container{
+    display: inline-block;
+    width:150px;
+    text-align:center;
+    background-color:rgb(64,64,64);
+}
+
+.field-container-inline .button-container .button-submit-custom{
+    background-color:rgb(129, 150, 77);
+    color:#fff;
+    font-family: 'Trebuchet MS';
+    font-size: 14px;
+    padding:6px 15px;
+}
+
+.text-value{
+    background-color:rgb(38,38,38);
+    width:280px !important;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:3px;
+    padding-bottom:3px;
+    height:22px !important;
+    margin-top:-1px;
+    line-height: 22px;
+    vertical-align: middle;
+    text-align: right;
+    font-size: 14px;
+}
+
+.myTextBox{
+    background-color: black; 
+    border: 1px solid white; 
+    width: 100px; 
+    text-align: center;
+}
+// .new-date-box{
+//     background-color: #000000; 
+//     padding-left: 5px; 
+//     border-bottom: solid 2px #fff;  
+//     border-right: solid 2px #fff;  
+//     border-top: solid 2px #999;  
+//     border-left: solid 2px #999;  
+// }

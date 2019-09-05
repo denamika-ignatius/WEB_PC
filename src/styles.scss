@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+.f-green{color: #00E800;}  
+.f-red{color: #FF0000;}
+.f-purple{color: purple;}
+.f-magenta{color: magenta;}
+.f-yellow{color: gold;}
+.f-blue{color: cyan;}
+.f-grey{color: grey;}
+.f-Dodgerblue{color: #1e90ff;}
+.g-background{ color:white; background-color: #000000}
+.g-background-red{ color:white; background-color: #FF0000}
+.g-background-green{ color:white; background-color: green}
+.g-header-background{ color:white; background-color: #000000}
+.g-header-table-background{ color:#b1b1b1; background-color: #2b2b2b; border-top: 1px solid; border-bottom: 1px solid; border-color: #2b2b2b;}
+.tableData-1 { background-color: #1b1b1b;}
+.tableData-0 { background-color: black; }
+.tableData-f { background-color: #725511; }
+
+
+.stock-sector0{color : magenta; }
+.stock-sector1{color: rgb(0,255,0) ;}
+.stock-sector2{color: cyan ;}
+.stock-sector3{color: red ;}
+.stock-sector4{color: rgb(255, 0, 255) ;}
+.stock-sector5{color: yellow ;}
+.stock-sector6{color: white ;}
+.stock-sector7{color: lightgreen ;}
+.stock-sector8{color: magenta ;}
+.stock-sector9{color: sandybrown;}
+.stock-sector-other{color: #fff;}
+.box-green { height: 50px; width: 50px; background-color: #00E800; }
+.box-red { height: 50px; width: 50px; background-color: #FF0000; }
+
+.box-square{
+    background-color:#000; border-right:2px solid #fff; border-bottom:2px solid #fff; border-left:2px solid #999; border-top:2px solid #999;
+}
+
+.dx-header-row {
+    color: #b1b1b1 !important;
+    background-color: #2b2b2b !important; 
+    font-weight: bold !important;
+}
+.dx-datagrid-content .dx-datagrid-table {
+    border-collapse: unset !important;
+}
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td{
+    border-bottom: 0px !important;
+}
+.dx-datagrid-headers .dx-datagrid-nowrap{
+    height: 26px !important;
+}
+
+.custom-tabs .dx-tab{
+    background-color:rgb(89, 89, 89);
+    color:rgb(148,148,148);
+    border-left:1px solid rgb(64,64,64);
+    border-right:1px solid rgb(64,64,64);
+    
+}
+.custom-tabs .dx-tab-selected{
+    background-color:rgb(127, 127, 127);
+    color:#fff;
+}
+.custom-tabs .dx-tab-selected:before{
+    background-color:transparent;
+}
+
+.custom-tabs .dx-state-hover{
+    background-color:rgb(115, 115, 115);
+    color:#d9d9d9;
+}
+
+.custom-tabs-round{
+    background-color: rgb(41, 41, 41);
+}
+.custom-tabs-round .dx-tab{
+    padding:3px 5px;
+    background-color:rgb(41, 41, 41);
+    border-right:1px solid #000;
+}
+.custom-tabs-round .dx-tab .tab-item{
+    //background-color:rgb(89, 89, 89);
+    color:rgb(148,148,148);
+    padding-left:12px;
+    padding-right:12px;
+    border-radius:10px;
+}
+.custom-tabs-round .dx-tab-selected .tab-item{
+    background-color:rgb(98, 98, 98) !important;
+    color:#fff !important;
+    
+}
+.custom-tabs-round .dx-tab-selected:before{
+    background-color:transparent;
+}
+
+.custom-tabs-round .dx-state-hover .tab-item{
+    background-color:rgb(41, 41, 41);
+    color:#d9d9d9;
+}
+
+.left-padding-10{
+    padding-left: 10px;
+}

@@ -1,0 +1,256 @@
+
+  <div fxLayout='column' fxFill style="background-color: #000; color:rgb(170,170,170) !important;">
+    <div fxFlex="30px" style="background-color: rgb(41, 41, 41);" fxFill> 
+      <dx-tabs 
+        #apiTabs
+        [items]="tabs"
+        [selectedIndex]="0"
+        (onItemClick)="clickSelectTab($event)"
+        itemTemplate="listItem"
+        height="100%"
+        class="custom-tabs-round"
+        width="100%"
+      >
+      <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index">
+          <div *ngIf="selectTab==itemData.display" class="tab-item" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;">{{itemData.display}}</div>
+          <div *ngIf="selectTab!=itemData.display" class="tab-item" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;">{{itemData.display}}</div>
+        </div>
+      </dx-tabs>
+    </div>
+    <div fxFlex="30px" style="background-color:#000; border-right:2px solid #fff; border-bottom:2px solid #fff; border-left:2px solid #999; border-top:2px solid #999;" fxFill> 
+        
+      <dx-select-box  
+        [inputAttr]="{ id: getId(), class:global.setColorStock(inputData['box1']['code']) }"
+        (onOpened)="box1_onFocus($event)"
+        (onFocusIn)="box1_onOpened($event)"
+        [dataSource]="dsStockList"
+        [(value)]="inputData['box1']['codeNboard']" 
+        (onValueChanged)="box1_onChange($event)"
+        placeholder="Enter Code Here"
+        displayExpr="ProductFullName"
+        valueExpr="ProductCodeBoard"
+        spellcheck="true"
+        minSearchLength="0"
+        showDataBeforeSearch="false"
+        [(opened)]="inputData['box1']['isOpen']"
+        searchEnabled="true"
+        searchMode="startswith" 
+        (onFocusOut)="box1_onFocusOut($event)"
+        searchTimeout=0
+        (onEnterKey)="box1_onEnter($event)"
+        itemTemplate="item" 
+        (onKeyDown)="box1_onKeyDown($event)"
+        class="left-padding-10"
+        > 
+        <div *dxTemplate="let data of 'item'"> 
+          <span [ngClass]="global.setColorStock(data.ProductCode)" >{{data.ProductFullName}}</span>
+        </div>
+      </dx-select-box>  
+    </div>
+    <div fxFlex="50px" style="border:2px solid #555;" fxFill>  
+      <div fxLayout='row' fxFill >
+        <div fxFlex="31%" fxFill >  
+          <div fxLayout='column' fxFill >
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="35px" fxLayout='column' fxFill style="padding-left: 5px;">
+                  Last
+                </div>
+                <div fxFlex="calc(100%-35px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                    <span [ngClass]="global.colorFormat(inputData['box1']['data']['Change'])">{{global.numberFormat(inputData['box1']['data']['LastPrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="35px" fxLayout='column' fxFill style="padding-left: 5px;">
+                  Chg
+                </div>
+                <div fxFlex="calc(100%-35px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['Change'])">{{global.numberSignFormat(inputData['box1']['data']['Change'],0)}}({{global.numberSignFormat(inputData['box1']['data']['ChangePercent'],2)}}%)</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="50px" fxLayout='column' fxFill style="padding-left: 5px;">
+                  Vol
+                </div>
+                <div fxFlex="calc(100%-50px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                    <span>{{global.numberFormat(inputData['box1']['data']['LastTradedLot'],0)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="21%" fxFill >  
+          <div fxLayout='column' fxFill >
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="45%" fxLayout='column' fxFill>
+                  Open
+                </div>
+                <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['OpenPrice']-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(inputData['box1']['data']['OpenPrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="45%" fxLayout='column' fxFill>
+                  High
+                </div>
+                <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['HighPrice']-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(inputData['box1']['data']['HighPrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="45%" fxLayout='column' fxFill>
+                  Low
+                </div>
+                <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['LowPrice']-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(inputData['box1']['data']['LowPrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="23%" fxFill >  
+          <div fxLayout='column' fxFill >
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                  <div fxFlex="45%" fxLayout='column' fxFill >
+                    TFreq
+                  </div>
+                  <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                      {{global.kmbtFormat(inputData['box1']['data']['TotalFreq'],2)}}
+                  </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="45%" fxLayout='column' fxFill >
+                  Close
+                </div>
+                <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['PreviousPrice']-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(inputData['box1']['data']['PreviousPrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="45%" fxLayout='column' fxFill >
+                  WAP
+                </div>
+                <div fxFlex="55%" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                  <span [ngClass]="global.colorFormat(inputData['box1']['data']['AveragePrice']-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(inputData['box1']['data']['AveragePrice'],0)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="25%" fxFill >  
+          <div fxLayout='column' fxFill >
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="40px" fxLayout='column' fxFill  >
+                  TVal
+                </div>
+                <div fxFlex="calc(100%-40px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                    {{global.kmbtFormat(inputData['box1']['data']['TotalValue'],2)}}
+                </div>
+              </div>
+            </div>
+            <div fxFlex="33%" fxFill>
+              <div fxLayout='row' fxFill>
+                <div fxFlex="40px" fxLayout='column' fxFill>
+                  TVol
+                </div>
+                <div fxFlex="calc(100%-40px)" fxLayout='column' fxFill style="text-align: right; padding-right: 5px;">
+                    {{global.kmbtFormat(inputData['box1']['data']['TotalLot'],2)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="calc(100%-50px-30px-30px)" fxFill (window:resize)="onResize($event)" (onload)="onLoad($event)" *ngIf="selectTab=='Order Book'">  
+ 
+        <table width="100%" id="odrerBookIdX" style="border-spacing: 0; border-collapse: collapse; " no-padding>
+        <thead  > 
+          <tr class="g-header-table-background">
+              <td width="10%" style="text-align: end;">B#</td>
+              <td width="13%" style="text-align: end;">BLot</td>
+              <td width="16%" style="text-align: end;">Bid</td>
+              <td width="16%" style="text-align: end;">Offer</td>
+              <td width="13%" style="text-align: end;">OLot</td>
+              <td width="10%" style="text-align: end;">O#</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of displayData['orderBook1Display'];let i = index;" [ngClass]="sqSetBg(i)">
+              <td style="text-align: end;">{{global.numberFormat0(item.BidVol)}} </td>
+              <td style="text-align: end;" [ngClass]="global.colorFormat(0)">{{global.numberFormat(item.BidLot)}}</td>
+              <td style="text-align: end;" [ngClass]="global.colorFormat(item.BidPrice-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat0(item.BidPrice)}}</td>
+              <td style="text-align: end;" [ngClass]="global.colorFormat(item.OfferPrice-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat0(item.OfferPrice)}}</td>
+              <td style="text-align: end;" [ngClass]="global.colorFormat(0)">{{global.numberFormat0(item.OfferLot)}}</td>
+              <td style="text-align: end; padding-right:5px;">{{global.numberFormat0(item.OfferVol)}} </td>
+          </tr> 
+        </tbody>
+      </table>  
+
+    </div>
+    <div fxFlex="calc(100%-50px-30px-30px)" fxFill (window:resize)="onResize($event)" (onload)="onLoad($event)" *ngIf="selectTab=='Trade Book'">  
+ 
+      <table width="100%" id="odrerBookIdX" style="border-spacing: 0; border-collapse: collapse;" no-padding>
+      <thead  > 
+        <tr class="g-header-table-background">
+            <td width="20%" style="text-align: end;">Price</td>
+            <td width="20%" style="text-align: end;">BLot</td>
+            <td width="20%" style="text-align: end;">SLot</td>
+            <td width="20%" style="text-align: end;">TLot</td>
+            <td width="20%" style="text-align: end;">Freq</td> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of displayData['tradeBookDisplay'];let i = index;" [ngClass]="sqSetBg(i)">
+          <td style="text-align: end;" [ngClass]="global.colorFormat(item.Price-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(item.Price)}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.BLot)}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.SLot)}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.BLot+item.SLot)}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.Freq)}}</td> 
+        </tr> 
+      </tbody>
+    </table>  
+
+    </div>
+    <div fxFlex="calc(100%-50px-30px-30px)" fxFill (window:resize)="onResize($event)" (onload)="onLoad($event)" *ngIf="selectTab=='Top Buy & Seller'">  
+ 
+      <table width="100%" id="odrerBookIdX" style="border-spacing: 0; border-collapse: collapse;" no-padding>
+      <thead  > 
+        <tr class="g-header-table-background">
+            <td width="10%" style="text-align: end;">Buyer</td>
+            <td width="20%" style="text-align: end;">BVol</td>
+            <td width="20%" style="text-align: end;">B WAP</td>
+            <td width="10%" style="text-align: end;">Seller</td>
+            <td width="20%" style="text-align: end;">SVol</td> 
+            <td width="20%" style="text-align: end;">S WAP</td> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of displayData['topBuySellDisplay'];let i = index;" [ngClass]="sqSetBg(i)">
+          <td style="text-align: end;" [ngClass]="global.colorBrokerCode(item.BrokerBuyCode)">{{item.BrokerBuyCode}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.BrokerBuyLot)}}</td>
+          <td style="text-align: end;" [ngClass]="global.colorFormat(item.BrokerBuyAvgPrice-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(item.BrokerBuyAvgPrice,0)}}</td>
+          <td style="text-align: end;" [ngClass]="global.colorBrokerCode(item.BrokerSellCode)">{{item.BrokerSellCode}}</td>
+          <td style="text-align: end;" >{{global.numberFormat(item.BrokerSellLot)}}</td>
+          <td style="text-align: end;" [ngClass]="global.colorFormat(item.BrokerSellAvgPrice-inputData['box1']['data']['PreviousPrice'])">{{global.numberFormat(item.BrokerSellAvgPrice,0)}}</td>
+        </tr> 
+      </tbody>
+    </table>  
+
+    </div>
+  </div> 

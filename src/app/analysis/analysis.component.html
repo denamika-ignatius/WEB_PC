@@ -1,0 +1,525 @@
+<div fxLayout='column' fxFill >
+    <div fxFlex="70px " fxFill> 
+      <app-header></app-header>
+    </div>
+  <div fxFlex="calc(100%-120px)" fxFill  style="background-color: black"> 
+    <div fxLayout='column' fxFill >
+      <div fxFlex="34px" fxFill style=" background-color:rgb(64,64,64);" >  
+          <div fxLayout='row' fxFill *ngIf="selectTab=='Financial Report'">
+              <div fxFLex = "100px"  style = "background-color: #7F7F7F; text-align: center; padding-top:9px ; height:17px !important; padding-bottom: 6px; padding-left: 5px;" >
+                <a >Stock Code </a>
+              </div>
+              <div fxFlex="300px" > 
+                  <dx-select-box  
+                    style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px "
+                    [inputAttr]="{ id: getId(), class:global.setColorStock(stockInput['code']) }"
+                    (onOpened)="box1_onFocus($event)"
+                    (onFocusIn)="box1_onOpened($event)"
+                    [dataSource]="dsStockOnlyList"
+                    [(value)]="stockInput['code']" 
+                    (onValueChanged)="box1_onChange($event)"
+                    placeholder="Enter Code Here"
+                    displayExpr="ProductFullName"
+                    valueExpr="ProductCode"
+                    spellcheck="true"
+                    minSearchLength="0"
+                    showDataBeforeSearch="false"
+                    [(opened)]="stockInput['isOpen']"
+                    searchEnabled="true"
+                    searchMode="startswith" 
+                    (onFocusOut)="box1_onFocusOut($event)"
+                    searchTimeout=0
+                    (onEnterKey)="box1_onEnter($event)"
+                    itemTemplate="item" 
+                    (onKeyDown)="box1_onKeyDown($event)"
+                    > 
+                    <div *dxTemplate="let data of 'item'"> 
+                      <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+                    </div>
+                  </dx-select-box> 
+              </div>
+              <div fxFlex = "120px" style = "height:auto; margin-left: 5px; background-color: #7F7F7F; text-align: center; padding-top:8px; border-bottom: solid 2px #404040 "  >
+                <a> Financial Type </a>
+              </div>
+              <div fxFlex ="200px"  >
+                  <dx-select-box
+                    style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px;"
+                    [inputAttr]="{ id: 'inputBoxStockType' }"
+                    (onOpened)="stockType_onOpened($event)"
+                    [dataSource]="dsType"
+                    [(value)]="stockInput['type']" 
+                    (onValueChanged)="inputType_onChange($event)"
+                    [(placeholder)]="stockInput['type']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+          </div>
+          <div fxLayout='row' fxFill *ngIf="selectTab=='Stock Chart'">
+              <div fxFLex = "100px"  style = "background-color: #7F7F7F; text-align: center;  padding-left: 5px ; padding-top:9px; padding-bottom: 6px; height:17px !important;" >
+                <a >Stock Code </a>
+              </div>
+              <div fxFlex="300px" > 
+                  <dx-select-box  
+                  style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px "
+                  [inputAttr]="{ id: getId(), class:global.setColorStock(stockInput['code']) }"
+                  (onOpened)="box1_onFocus($event)"
+                  (onFocusIn)="box1_onOpened($event)"
+                  [dataSource]="dsStockOnlyList"
+                  [(value)]="stockInput['code']" 
+                  (onValueChanged)="box1_onChange($event)"
+                  placeholder="Enter Code Here"
+                  displayExpr="ProductFullName"
+                  valueExpr="ProductCode"
+                  spellcheck="true"
+                  minSearchLength="0"
+                  showDataBeforeSearch="false"
+                  [(opened)]="stockInput['isOpen']"
+                  searchEnabled="true"
+                  searchMode="startswith" 
+                  (onFocusOut)="box1_onFocusOut($event)"
+                  searchTimeout=0
+                  (onEnterKey)="box1_onEnter($event)"
+                  itemTemplate="item" 
+                  (onKeyDown)="box1_onKeyDown($event)"
+                  > 
+                  <div *dxTemplate="let data of 'item'"> 
+                    <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+                  </div>
+                </dx-select-box>  
+              </div>
+              <div fxFlex = "100px" style = "height:auto; margin-left: 5px; background-color: #7F7F7F; text-align: center; padding-top:8px; border-bottom: solid 2px #404040 "  >
+                <a> Interval  </a>
+              </div>
+              <div fxFlex ="120px"  >
+                <dx-select-box
+                    style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px;"
+                    [inputAttr]="{ id: 'inputBoxStockInterval' }"
+                    (onOpened)="stockInterval_onOpened($event)"
+                    [dataSource]="dsInterval"
+                    [(value)]="stockInput['interval']" 
+                    (onValueChanged)="inputInterval_onChange($event)"
+                    [(placeholder)]="stockInput['interval']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+          </div>
+          <div fxLayout='row' fxFill *ngIf="selectTab=='Index Chart'">
+              <div fxFLex = "100px"  style = "background-color: #7F7F7F; text-align: center; padding-left: 5px; padding-bottom: 6px ; padding-top:9px;height:17px !important;" >
+                <a >Code </a>
+              </div> 
+              <div fxFlex="300px" > 
+                <dx-select-box
+                    style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px "
+                    [dataSource]="dsIndexList"
+                    [(value)]="indexInput['code']" 
+                    (onValueChanged)="input_onChange($event)"
+                    [(placeholder)]="indexInput['code']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+              <div fxFlex = "120px" style = "height:auto; margin-left: 5px; background-color: #7F7F7F; text-align: center; padding-top:8px; border-bottom: solid 2px #404040  "  >
+                <a> Interval  </a>
+              </div>
+              <div fxFlex ="200px"  >
+                <dx-select-box
+                  style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px;"
+                    [inputAttr]="{ id: 'inputBoxStockInterval' }"
+                    (onOpened)="stockInterval_onOpened($event)"
+                    [dataSource]="dsInterval"
+                    [(value)]="indexInput['interval']" 
+                    (onValueChanged)="inputInterval_onChange($event)"
+                    [(placeholder)]="indexInput['interval']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+          </div>
+      </div>
+      <div fxFlex="40px" fxFill style=" background-color:rgb(64,64,64);"> 
+          <dx-tabs 
+          [items]="tabs"
+          [selectedIndex]="0"
+          (onItemClick)="clickSelectTab($event)"
+          itemTemplate="listItem"
+          height="100%"
+          width="40%"
+          class="custom-tabs"
+          >
+          <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index">
+            <div *ngIf="selectTab==itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+            <div *ngIf="selectTab!=itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+          </div> 
+        </dx-tabs>
+      </div>
+      <div fxFlex="calc(100%-34px-40px)" *ngIf="selectTab=='Financial Report'">
+        <div fxLayout='column' fxFill >
+          <!--<div fxFlex="30px"  fxFill> 
+            <div fxLayout='row' fxFill > 
+              <div fxFlex="70px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Code:</div>
+              <div fxFlex="calc(50%-70px)" fxFill> 
+                  <dx-select-box  
+                    [inputAttr]="{ id: getId(), class:global.setColorStock(stockInput['code']) }"
+                    (onOpened)="box1_onFocus($event)"
+                    (onFocusIn)="box1_onOpened($event)"
+                    [dataSource]="dsStockOnlyList"
+                    [(value)]="stockInput['code']" 
+                    (onValueChanged)="box1_onChange($event)"
+                    placeholder="Enter Code Here"
+                    displayExpr="ProductFullName"
+                    valueExpr="ProductCode"
+                    spellcheck="true"
+                    minSearchLength="0"
+                    showDataBeforeSearch="false"
+                    [(opened)]="stockInput['isOpen']"
+                    searchEnabled="true"
+                    searchMode="startswith" 
+                    (onFocusOut)="box1_onFocusOut($event)"
+                    searchTimeout=0
+                    (onEnterKey)="box1_onEnter($event)"
+                    itemTemplate="item" 
+                    (onKeyDown)="box1_onKeyDown($event)"
+                    > 
+                    <div *dxTemplate="let data of 'item'"> 
+                      <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+                    </div>
+                  </dx-select-box>  
+              </div>
+              <div fxFlex="150px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Financial Type:</div>
+              <div fxFlex="calc(50%-150px)" fxFill> 
+                <dx-select-box
+                    [inputAttr]="{ id: 'inputBoxStockType' }"
+                    (onOpened)="stockType_onOpened($event)"
+                    [dataSource]="dsType"
+                    [(value)]="stockInput['type']" 
+                    (onValueChanged)="inputType_onChange($event)"
+                    [(placeholder)]="stockInput['type']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+            </div>
+          </div>-->
+          <div fxFlex="calc(100%-100px)" style='overflow: auto;'> 
+            <table class="financial-report" style="overflow-x: auto; width: 100%;" >
+              <!--<td class="fixed freeze_horizontal" style="width: 400px;">
+                  <tr class="fixed freeze">Financial Statement Date</tr>
+                  <tr>Currency</tr>
+                  <tr>Fiscal Year Ends</tr>
+                  <tr>Month Covered in Income Statment</tr>  
+                  <tr>&nbsp;</tr> 
+                  <tr>&nbsp;</tr>
+                  <tr>Summary of Balance Sheets</tr>
+                  <tr>&nbsp;&nbsp;Inventories</tr>
+                  <tr>&nbsp;&nbsp;Currency Assets</tr>
+                  <tr>&nbsp;&nbsp;Fix Assets</tr>
+                  <tr>&nbsp;&nbsp;Total Assets</tr>
+                  <tr>&nbsp;&nbsp;Currency Liabilities</tr>
+                  <tr>&nbsp;&nbsp;Long term Liabilities</tr>
+                  <tr>&nbsp;&nbsp;Total Liabilities</tr>
+                  <tr>&nbsp;&nbsp;Authorized</tr>
+                  <tr>&nbsp;&nbsp;Paid-up Capital</tr>
+                  <tr>&nbsp;&nbsp;Par Value</tr>
+                  <tr>&nbsp;&nbsp;Paid-up Capital Shares</tr>
+                  <tr>&nbsp;&nbsp;Retained Earnings</tr>
+                  <tr>&nbsp;&nbsp;Total Equity</tr>
+                  <tr>&nbsp;&nbsp;Minority Interest</tr>
+                  <tr>&nbsp;&nbsp;Receicables</tr> 
+                  <tr>Summary of Income Statement</tr>
+                  <tr>&nbsp;&nbsp;Total Sales</tr>
+                  <tr>&nbsp;&nbsp;Cost of Good Sold</tr>
+                  <tr>&nbsp;&nbsp;Gross Profit</tr>
+                  <tr>&nbsp;&nbsp;Operating Profit</tr>
+                  <tr>&nbsp;&nbsp;Other Income</tr>
+                  <tr>&nbsp;&nbsp;Earning Before Tax</tr>
+                  <tr>&nbsp;&nbsp;Tax</tr>
+                  <tr>&nbsp;&nbsp;Net Income</tr>
+                  <tr>Per Share Data</tr>
+                  <tr>&nbsp;&nbsp;Earning Per Shares (IDR)</tr>
+                  <tr>&nbsp;&nbsp;Book Value (IDR)</tr>
+                  <tr>&nbsp;&nbsp;Price Earning Ratio (PER)</tr>
+                  <tr>Financial Ratios</tr>
+                  <tr>&nbsp;&nbsp;Debt Equity Ratio (x)</tr>
+                  <tr>&nbsp;&nbsp;Return On Assets (%)</tr>
+                  <tr>&nbsp;&nbsp;Return On Equity (%)</tr>
+                  <tr>&nbsp;&nbsp;Net Profit Margin (%)</tr>
+                  <tr>&nbsp;&nbsp;Operating Profit Margin (%)</tr>
+                  <tr>Cash Flow</tr>
+                  <tr>&nbsp;&nbsp;Cash Flow from Operating Activities</tr>
+                  <tr>&nbsp;&nbsp;Cash Flow from Investing Activities</tr>
+                  <tr>&nbsp;&nbsp;Cash Flow from Financial Activities</tr>
+                  <tr>&nbsp;&nbsp;Net Increase in Cash & Cash Equivalent</tr>
+                  <tr>&nbsp;&nbsp;Cash & Cash Equivalent at the Begining of the Year</tr>
+                  <tr>&nbsp;&nbsp;Cash & Cash Equivalent at the End of the Year</tr>
+              </td>
+              <td *ngFor="let item of data.data118" style="width: 200px;">
+                  <tr style="text-align: end" class="fixed freeze_vertical">{{item.FinancialDate}}</tr>
+                  <tr style="text-align: end" >{{item.Currency}}</tr>
+                  <tr style="text-align: end" >{{item.FinancialYearEnd}}</tr>
+                  <tr style="text-align: end" >{{item.MonthCovered}}</tr>
+                  <tr>&nbsp;</tr> 
+                  <tr>&nbsp;</tr>
+                  <tr>&nbsp;</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.Inventories)">{{global.kmbtFormat(item.Inventories,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CurrentAssets)">{{global.kmbtFormat(item.CurrentAssets,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.FixedAssets)">{{global.kmbtFormat(item.FixedAssets,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.TotalAssets)">{{global.kmbtFormat(item.TotalAssets,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CurrentLiabilities)">{{global.kmbtFormat(item.CurrentLiabilities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.LongtermLiabilities)">{{global.kmbtFormat(item.LongtermLiabilities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.TotalLiabilities)">{{global.kmbtFormat(item.TotalLiabilities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.Authorized)">{{global.kmbtFormat(item.Authorized,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.PaidupCapital)">{{global.kmbtFormat(item.PaidupCapital,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.ParValue)">{{global.kmbtFormat(item.ParValue,2)}}</tr> 
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.PaidupCapitalShares)">{{global.kmbtFormat(item.PaidupCapitalShares,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.RetainedEarnings)">{{global.kmbtFormat(item.RetainedEarnings,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.TotalEquity)">{{global.kmbtFormat(item.TotalEquity,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.MinorityInterest)">{{global.kmbtFormat(item.MinorityInterest,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.Receivables)">{{global.kmbtFormat(item.Receivables,2)}}</tr>
+                  <tr>&nbsp;</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.TotalSales)">{{global.kmbtFormat(item.TotalSales,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CostofGoodSold)">{{global.kmbtFormat(item.CostofGoodSold,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.GrossProfit)">{{global.kmbtFormat(item.GrossProfit,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.OpeningProfit)">{{global.kmbtFormat(item.OpeningProfit,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.OtherIncome)">{{global.kmbtFormat(item.OtherIncome,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.EarningBeforeTax)">{{global.kmbtFormat(item.EarningBeforeTax,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.Tax)">{{global.kmbtFormat(item.Tax,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.NetIncome)">{{global.kmbtFormat(item.NetIncome,2)}}</tr>
+                  <tr>&nbsp;</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.EPS)">{{global.numberFormat(item.EPS,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.BV)">{{global.numberFormat(item.BV,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.PER)">{{global.numberFormat(item.PER,2)}}</tr>
+                  <tr>&nbsp;</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.DER)">{{global.numberFormat(item.DER,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.ROA)">{{global.numberFormat(item.ROA,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.ROE)">{{global.numberFormat(item.ROE,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.NPM)">{{global.numberFormat(item.NPM,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.OPM)">{{global.numberFormat(item.OPM,2)}}</tr> 
+                  <tr>&nbsp;</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CashFlowFromOperatingActivities)">{{global.kmbtFormat(item.CashFlowFromOperatingActivities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CashFlowFromInvestingActivities)">{{global.kmbtFormat(item.CashFlowFromInvestingActivities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CashFlowFromFinancingActivities)">{{global.kmbtFormat(item.CashFlowFromFinancingActivities,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.NetIncreaseInCash)">{{global.kmbtFormat(item.NetIncreaseInCash,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CashBegin)">{{global.kmbtFormat(item.CashBegin,2)}}</tr>
+                  <tr style="text-align: end" [ngClass]="global.colorFormat(item.CashEnd)">{{global.kmbtFormat(item.CashEnd,2)}}</tr> 
+              </td>-->
+              <tr *ngFor="let row of dataRow">
+                <td class="fixed-label-column" [ngClass]="{'bg-header': row.type=='header'}" ><span *ngIf="row.type == 'indent'">&nbsp;&nbsp;&nbsp;&nbsp;</span>{{row.label}}</td>
+                <td class="content-column" *ngFor="let col of row.content" [ngClass]="checkClass(row, col)">{{ row.format == '' ? col.value : (row.format == 'kmbt' ? (col.isyoy ? global.numberSignFormat(col.value,2) :  global.kmbtFormat(col.value, 2)) : global.numberFormat(col.value, 2) ) }}<div *ngIf="row.type=='empty'">&nbsp;</div> </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="calc(100%-34px-40px)" *ngIf="selectTab=='Stock Chart'">
+        <div fxLayout='column' fxFill >
+          <!--<div fxFlex="30px"  fxFill> 
+            <div fxLayout='row' fxFill >
+              
+              <div fxFlex="70px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Code:</div> 
+              <div fxFlex="calc(50%-70px)" fxFill> 
+                <dx-select-box  
+                [inputAttr]="{ id: getId(), class:global.setColorStock(stockInput['code']) }"
+                (onOpened)="box1_onFocus($event)"
+                (onFocusIn)="box1_onOpened($event)"
+                [dataSource]="dsStockOnlyList"
+                [(value)]="stockInput['code']" 
+                (onValueChanged)="box1_onChange($event)"
+                placeholder="Enter Code Here"
+                displayExpr="ProductFullName"
+                valueExpr="ProductCode"
+                spellcheck="true"
+                minSearchLength="0"
+                showDataBeforeSearch="false"
+                [(opened)]="stockInput['isOpen']"
+                searchEnabled="true"
+                searchMode="startswith" 
+                (onFocusOut)="box1_onFocusOut($event)"
+                searchTimeout=0
+                (onEnterKey)="box1_onEnter($event)"
+                itemTemplate="item" 
+                (onKeyDown)="box1_onKeyDown($event)"
+                > 
+                <div *dxTemplate="let data of 'item'"> 
+                  <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+                </div>
+              </dx-select-box>  
+              </div>
+              <div fxFlex="80px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Interval:</div>
+              <div fxFlex="calc(50%-80px)" fxFill> 
+                <dx-select-box
+                    [inputAttr]="{ id: 'inputBoxStockInterval' }"
+                    (onOpened)="stockInterval_onOpened($event)"
+                    [dataSource]="dsInterval"
+                    [(value)]="stockInput['interval']" 
+                    (onValueChanged)="inputInterval_onChange($event)"
+                    [(placeholder)]="stockInput['interval']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+            </div>
+          </div>-->
+          <div fxFlex="calc(100%-30px)" fxFill id="chart-container"> 
+            <dx-chart 
+              id="chart" 
+              [dataSource]="dsStockChart"
+              palette="Bright">
+              <dxo-size [height]="getHeight()" [width]="getWidth()"></dxo-size> 
+              <dxo-legend     
+                hoverMode="none"
+                position="inside"
+                [visible]="false"
+              ></dxo-legend>
+              <dxi-series
+                  [name]="stockInput.code"
+                  openValueField="Open"
+                  highValueField="High"
+                  lowValueField="Low"
+                  closeValueField="Close" 
+                  showInLegend="false">
+                  <dxo-reduction color="red"></dxo-reduction>
+              </dxi-series>
+              <dxo-common-series-settings
+                  argumentField="DateTime"
+                  type="candlestick">
+              </dxo-common-series-settings>
+              <dxi-value-axis >
+                  <!-- <dxo-title text="US dollars"></dxo-title> -->
+                  <dxo-label>
+                      <dxo-format
+                          type="fixedPoint" 
+                          [precision]="0">
+                      </dxo-format>
+                  </dxo-label>
+              </dxi-value-axis>
+              <!-- <dxo-argument-axis [workdaysOnly]="false">
+                  <dxo-label format="shortDate"></dxo-label>
+              </dxo-argument-axis> -->
+              <dxo-export [enabled]="false"></dxo-export>
+              <dxo-tooltip
+                  [enabled]="true"
+                  location="edge"
+                  [customizeTooltip]="customizeTooltip">
+              </dxo-tooltip>
+              <!-- <dxo-zoom-and-pan
+                argumentAxis="both"
+                valueAxis="pan"
+                [dragToZoom]="true">
+              </dxo-zoom-and-pan> -->
+            </dx-chart>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="calc(100%-34px-40px)" *ngIf="selectTab=='Index Chart'">
+        <div fxLayout='column' fxFill >
+          <!--<div fxFlex="30px"  fxFill> 
+            <div fxLayout='row' fxFill > 
+              <div fxFlex="70px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Code:</div> 
+              <div fxFlex="calc(50%-70px)" fxFill> 
+                  <dx-select-box
+                  [dataSource]="dsIndexList"
+                  [(value)]="indexInput['code']" 
+                  (onValueChanged)="input_onChange($event)"
+                  [(placeholder)]="indexInput['code']" 
+                  spellcheck="true"
+                  
+                  minSearchLength="0"
+                  showDataBeforeSearch="true"
+                  searchEnabled="true">
+              </dx-select-box> 
+              </div>
+              <div fxFlex="80px" fxFill style="vertical-align: middle;display: flex;align-items: center;">Interval:</div>
+              <div fxFlex="calc(50%-80px)" fxFill> 
+                <dx-select-box
+                    [inputAttr]="{ id: 'inputBoxStockInterval' }"
+                    (onOpened)="stockInterval_onOpened($event)"
+                    [dataSource]="dsInterval"
+                    [(value)]="indexInput['interval']" 
+                    (onValueChanged)="inputInterval_onChange($event)"
+                    [(placeholder)]="indexInput['interval']" 
+                    spellcheck="true"
+                    
+                    minSearchLength="0"
+                    showDataBeforeSearch="true"
+                    searchEnabled="true">
+                </dx-select-box> 
+              </div>
+            </div>
+          </div>-->
+          <div fxFlex="calc(100%-30px)" fxFill id="chart-container"> 
+              <dx-chart 
+              id="chart" 
+              [dataSource]="dsIndexChart"
+              palette="Bright">
+              <dxo-size [height]="getHeight()" [width]="getWidth()"></dxo-size> 
+              <dxo-legend     
+                hoverMode="none"
+                position="inside"
+                [visible]="false"
+              ></dxo-legend>
+              <dxi-series
+                  [name]="stockInput.code"
+                  openValueField="Open"
+                  highValueField="High"
+                  lowValueField="Low"
+                  closeValueField="Close" 
+                  showInLegend="false">
+                  <dxo-reduction color="red"></dxo-reduction>
+              </dxi-series>
+              <dxo-common-series-settings
+                  argumentField="DateTime"
+                  type="candlestick">
+              </dxo-common-series-settings>
+              <dxi-value-axis >
+                  <!-- <dxo-title text="US dollars"></dxo-title> -->
+                  <dxo-label>
+                      <dxo-format
+                          type="fixedPoint" 
+                          [precision]="0">
+                      </dxo-format>
+                  </dxo-label>
+              </dxi-value-axis>
+              <!-- <dxo-argument-axis [workdaysOnly]="false">
+                  <dxo-label format="shortDate"></dxo-label>
+              </dxo-argument-axis> -->
+              <dxo-export [enabled]="false"></dxo-export>
+              <dxo-tooltip
+                  [enabled]="true"
+                  location="edge"
+                  [customizeTooltip]="customizeTooltip">
+              </dxo-tooltip>
+              <!-- <dxo-zoom-and-pan
+                argumentAxis="both"
+                valueAxis="pan"
+                [dragToZoom]="true">
+              </dxo-zoom-and-pan> -->
+            </dx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill style = "border-top: solid 1px white;"> 
+    <app-footer></app-footer>
+  </div>
+</div>

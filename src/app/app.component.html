@@ -1,0 +1,1430 @@
+<div style="height: 100vh; width: 100%;" >
+    <div fxLayout='column' fxFill >
+        <div fxFlex="100%" fxFill>
+          <dx-popup title="Option" 
+              [(visible)]="input.isVisible_Option"
+              closeOnOutsideClick="true"
+              width="220px"
+              height="180px">
+              <div *dxTemplate="let itemData of 'content'" style="vertical-align: middle;display: flex;align-items: center;" >
+                      <dx-button 
+                      #buttonHeader 
+                      type="Text"
+                      (onClick)="changePWD()"
+                      [elementAttr]="{ class: 'buttonOption' }"
+                      [template]="'buttonTemplate'">
+                          <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+                              <img src="/assets/icons/ChangePWD.png" alt="" width="90px" height="90px"> 
+                          </div> 
+                    </dx-button>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <dx-button 
+                      #buttonHeader 
+                      type="Text"
+                      (onClick)="changeCPIN()"
+                      [elementAttr]="{ class: 'buttonOption' }"
+                      [template]="'buttonTemplate'">
+                          <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+                              <img src="/assets/icons/ChangePIN.png" alt="" width="90px" height="90px"> 
+                          </div> 
+                    </dx-button>
+              </div>
+          </dx-popup>
+          <dx-popup  title="Password Expired"
+              (onShown)="onShownPWD($event)"
+              [(visible)]="input.isVisible_PWD"
+              width="400px"
+              height="230px"
+              class ="popupExpired"
+              shadingColor="rgba(66, 73, 73,.5)"
+              >
+              <div *dxTemplate="let dataItemContent of 'content'">
+                <div fxLayout='column' fxFill >
+                  <div fxFlex="20% 30px 30px" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="40%" fxFill class="popup-text" > 
+                        Old Password
+                      </div>
+                      <div fxFlex="60%" fxFill> 
+                        <dx-text-box placeholder=""
+                          name="oldPassword"
+                          [(value)]="input.oldPassword"
+                          mode="password"
+                          height="24px"
+                          class="popup-box"
+                          (keyup.enter) ="enterOldPassword()"
+                        ></dx-text-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="20% 30px 30px" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="40%" fxFill class="popup-text"> 
+                        New Password
+                      </div>
+                      <div fxFlex="60%" fxFill> 
+                        <dx-text-box placeholder=""
+                          name="newPassword"
+                          [(value)]="input.newPassword"
+                          mode="password"
+                          height="24px"
+                          class="popup-box"
+                          (keyup.enter) ="enterNewPassword()"
+                        ></dx-text-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="40% 40px 40px" fxFill> 
+                    <div fxLayout='row' fxFill >
+                      <div fxFlex="40%" fxFill class="popup-text"> 
+                         Confirm Password 
+                      </div>
+                      <div fxFlex="60%" fxFill> 
+                        <dx-text-box placeholder=""
+                          name="confirmPassword"
+                          [(value)]="input.confirmPassword"
+                          mode="password"
+                          height="24px"
+                          class="popup-box"
+                          (keyup.enter) ="sendChangePassword()"
+                        ></dx-text-box>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="10% 10px 10px" fxFill fxLayoutAlign="center">
+                    <dx-button
+                      text="Change Password"
+                      (onClick)="sendChangePassword()"
+                      width="80%">
+                    </dx-button>
+                  </div>
+                </div>
+              </div>
+          </dx-popup>
+          <dx-popup title="PIN Expired"
+          (onShown)="onShownCPIN($event)"
+          [(visible)]="input.isVisible_CPIN"
+          width="350px"
+          height="210px"
+          class ="popupExpired"
+          shadingColor="rgba(66, 73, 73,.5)"
+          >
+          <div *dxTemplate="let dataItemContent of 'content'">
+              <div fxLayout='column' fxFill >
+              <div fxFlex="20% 30px 30px" fxFill> 
+                  <div fxLayout='row' fxFill >
+                  <div fxFlex="40%" fxFill class="popup-text"> 
+                      Old PIN
+                  </div>
+                  <div fxFlex="60%" fxFill> 
+                      <dx-text-box placeholder=""
+                      name="oldPIN"
+                      [(value)]="input.oldPIN"
+                      mode="password"
+                      height="24px"
+                      class="popup-box"
+                      (keyup.enter) ="enterOldPin()"
+                      ></dx-text-box>
+                  </div>
+                  </div>
+              </div>
+              <div fxFlex="20% 30px 30px" fxFill> 
+                  <div fxLayout='row' fxFill >
+                  <div fxFlex="40%" fxFill class="popup-text"> 
+                      New PIN
+                  </div>
+                  <div fxFlex="60%" fxFill> 
+                      <dx-text-box placeholder=""
+                      name="newPIN"
+                      [(value)]="input.newPIN"
+                      mode="password"
+                      height="24px"
+                      class="popup-box"
+                      (keyup.enter) ="enterNewPin()"
+                      ></dx-text-box>
+                  </div>
+                  </div>
+              </div>
+              <div fxFlex="20% 40px 40px" fxFill> 
+                  <div fxLayout='row' fxFill >
+                  <div fxFlex="40%" fxFill class="popup-text"> 
+                      Confirm PIN
+                  </div>
+                  <div fxFlex="60%" fxFill> 
+                      <dx-text-box placeholder=""
+                      name="confirmPIN"
+                      [(value)]="input.confirmPIN"
+                      mode="password"
+                      height="24px"
+                      class="popup-box"
+                      (keyup.enter) ="sendChangeCPIN()"
+                      ></dx-text-box>
+                  </div>
+                  </div>
+              </div>
+              <div fxFlex="20% 30px 30px" fxFill fxLayoutAlign="center">
+                  <dx-button
+                  text="Change PIN"
+                  (onClick)="sendChangeCPIN()"
+                  width="80%">
+                  </dx-button>
+              </div>
+              </div>
+          </div>
+          </dx-popup>
+          <dx-popup title="PIN"
+              (onShown)="onShownPIN($event)" 
+              [(visible)]="input.isVisible_PIN"
+              width="200px"
+              height="170px"
+              shadingColor="rgba(66, 73, 73,.5)"
+              >
+              <div *dxTemplate="let itemData of 'content'">
+                  <div fxLayout='column' fxFill >
+                      <div fxFlex="100%" fxFill>
+                          <!-- <dx-form
+                              id="formPIN"
+                              [(formData)]="input"
+                              (onEditorEnterKey)="signinPIN()">
+                              <dxi-item 
+                                  id="inputPIN"
+                                  dataField="pin" 
+                                  [editorOptions]="{ mode: 'password' }"> 
+                                  <dxo-label [visible]="true" caption="PIN"></dxo-label>
+                              </dxi-item>
+                          </dx-form> -->
+                          <dx-text-box 
+                              id="inputPIN"
+                              name="inputPIN"
+                              placeholder="Type PIN here..."
+                              mode="password"
+                              [showClearButton]="true" 
+                              [(value)]="input.pin"
+                              (onEnterKey)="signinPIN()"
+                          ></dx-text-box>
+                      </div>
+                      <div fxFlex="100%" fxFill>
+                          <dx-button
+                              text="SIGN IN"
+                              style="color:#ffbd21; background-color:rgba(255,189,33,0.08)"
+                              (onClick)="signinPIN()"
+                              width="100%">Sign In
+                          </dx-button>
+                      </div>
+                  </div>
+              </div>
+          </dx-popup>
+          <dx-popup 
+              (onShown)="onShownBuySell($event)" 
+              [(visible)]="input.isVisible_buysell"
+              [contentTemplate]="input.buyselltitle"
+              width="950px"
+              height="550px"
+              shadingColor="rgba(66, 73, 73,.5)"
+              class = "background-overlay"
+              >
+              <div *dxTemplate="let itemDataBuy of 'BUY'">
+                  <div fxLayout='column' fxFill>
+                      <div fxFlex="40px" fxFill  [ngClass]="[ getBuySellClass() ] " fxLayoutAlign="center" style = "background-color: #262626">
+                          <div fxLayout='row' fxFill>
+                              <div fxFlex="85px" fxFill>
+                                  <span style="font-size: 26px; padding-top: 5px; padding-left: 5px; font-family: 'Trebuchet MS';">BUY</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="5px" fxFill ></div>
+                      <div fxFlex="300px" fxFill>
+                          <div fxLayout ='row' fxFill>
+                              <div fxFlex = "50%" fxFill style="background-color: #8B0000; padding-left: 5px; padding-top: 5px; border-right: solid 1px white; " >
+                                  <div fxLayout ='column' fxFill>
+                                      <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout ='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                     Account :
+                                            </div>   
+                                            <div fxFlex="255px" fxFill  >
+                                                <dx-select-box
+                                                    (onValueChanged)="account_onChange($event)"
+                                                    [dataSource]="dsAccountList"
+                                                    [(value)]="input['account']"  
+                                                    minSearchLength="0"
+                                                    showDataBeforeSearch="true"
+                                                    searchEnabled="true" 
+                                                    displayExpr="AccountFullName"
+                                                    valueExpr="AccountCode"
+                                                    [inputAttr]="{ 'style': 'background:#000' }" 
+                                                    style = "background-color: #000; padding-left: 5px;">
+                                                </dx-select-box> 
+                                            </div>   
+                                            <div fxFex="45px" style="margin-left: 10px;" fxFill >
+                                                <dx-button
+                                                    style = "background-color: #8497b0;"
+                                                    type = "Text"
+                                                    text = "Refresh"
+                                                    (onClick) ="refreshButton_Clicked($event)">
+                                                </dx-button>
+                                            </div>                                   
+                                        </div>
+                                      </div>
+                                      <div fxFLex = 30px  style="margin-bottom: 3px;" >
+                                        <div fxLayout ='row'>
+                                                <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                    Stock Code :
+                                               </div>   
+                                                <div fxFlex="260px" fxFill style="padding-right: 5px; padding-top: 5px;" >
+                                                <dx-select-box
+                                                    [inputAttr]="{ id: 'inputBoxCode' }"
+                                                    [dataSource]="dsStockOnlyList"
+                                                    (onOpened)="inputCodeOpen($event)"
+                                                    [(value)]="input.code" 
+                                                    (onValueChanged)="inputCodeChange($event)"
+                                                    displayExpr="ProductFullName"
+                                                    valueExpr="ProductCode"
+                                                    spellcheck="true"
+                                                    searchMode="contains"
+                                                    searchExpr="ProductCode"
+                                                    minSearchLength="0"
+                                                    showDataBeforeSearch="true"
+                                                    searchEnabled="true" 
+                                                    placeholder="Select Code..."
+                                                    style = "background-color: #000; padding-left: 5px;"
+                                                    >
+                                                </dx-select-box> 
+                                            </div>
+                                            <div fxFlex="80px" fxFill style="padding-top:5px; ">
+                                                <dx-select-box
+                                                    [dataSource]="boardList"
+                                                    [(value)]="input.board" 
+                                                    minSearchLength="0"
+                                                    showDataBeforeSearch="true"
+                                                    searchEnabled="true"
+                                                    [inputAttr]="{ 'style': 'background:#000'}"
+                                                    style = "background-color: #000; margin-left: 10px; padding-left: 10px;"
+                                                    >
+                                                </dx-select-box> 
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                Session :     
+                                            </div> 
+                                            <div fxFlex="calc(100%-90px)" fxLayoutAlign="start center" fxFill>
+                                                <dx-radio-group
+                                                [dataSource]="dsSession"
+                                                [(value)]="input['session']"  
+                                                layout="horizontal"
+                                                 >
+                                                </dx-radio-group>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                Price :
+                                            </div> 
+                                            <div fxFlex="120px" fxFill>
+                                                <dx-text-box placeholder=""
+                                                [(value)]="input.price" 
+                                                (onValueChanged)="onPriceValueChanged($event)"
+                                                [inputAttr]="{'style': 'background:#000'}"
+                                                style = "background-color: #000; padding-left: 5px;"
+                                                >
+                                                </dx-text-box> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFLex ="50%" style="margin-right: 5px;">
+                                                <div fxLayout='row' >
+                                                    <div fxFlex="90px"  style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                        Volume(LOT) :
+                                                    </div> 
+                                                    <div fxFlex="120px" >
+                                                        <dx-text-box placeholder=""
+                                                        [(value)]="input.quantity" 
+                                                        (onValueChanged)="onQtyValueChanged($event)"
+                                                        [inputAttr]="{ 'style': 'background:#000' }"
+                                                        style = "background-color: #000; padding-left: 5px;"
+                                                        >
+                                                        </dx-text-box> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="50%" >
+                                                <div fxLayout ='row' >
+                                                    <div fxFlex="90px" style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                        Input By Value :
+                                                    </div>
+                                                    <div fxFLex="120px" >  <!-- masih kosongan -->
+                                                        <dx-text-box placeholder=""
+                                                        [(value)]="input.value" 
+                                                        (onValueChanged)="onQtyValueChanged($event)"
+                                                        [inputAttr]="{ 'style': 'background:#000' }"
+                                                        style = "background-color: #000; padding-left: 5px;"
+                                                        >
+                                                        </dx-text-box> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                               Value :
+                                            </div> 
+                                            <div fxFlex ="120px" fxFill>
+                                                    <dx-text-box placeholder=""
+                                                    [(value)]="input.value" 
+                                                    [inputAttr]="{ 'style': 'background:#000' }"
+                                                    style = "background-color: #000; padding-left: 5px;"
+                                                    disabled="true">
+                                                    </dx-text-box> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                Cash :
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                Used Limit :
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex ="30px"  style="margin-bottom: 3px;" >
+                                        <div fxLayout='row' fxFill>
+                                            <div fxFlex="90px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                Spilt :
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex = "calc(100%-300px-85px)" fxFill>
+                        a
+                      </div>
+                  </div>
+              </div>
+              <div *dxTemplate="let dataItemSell of 'SELL'" >
+                  <div fxLayout='column' fxFill >
+                      <div fxFlex="40px" fxFill  style = "background-color: darkgreen;" fxLayoutAlign="center" >
+                          <div fxLayout='row' fxFill>
+                              <div fxFlex="85px" fxFill>
+                                  <span style="font-size: 26px; padding-top: 5px;padding-left: 5px; font-family: 'Trebuchet MS';">SELL</span>
+                              </div>
+                              <div fxFlex="420px" fxFill style="padding-right: 5px; padding-top: 5px;">
+                                  <dx-select-box
+                                      [inputAttr]="{ id: 'inputBoxCode' }"
+                                      [dataSource]="dsStockOnlyList"
+                                      (onOpened)="inputCodeOpen($event)"
+                                      [(value)]="input.code" 
+                                      (onValueChanged)="inputCodeChange($event)"
+                                      displayExpr="ProductFullName"
+                                      valueExpr="ProductCode"
+                                      spellcheck="true"
+                                      searchMode="contains"
+                                      searchExpr="ProductCode"
+                                      minSearchLength="0"
+                                      showDataBeforeSearch="true"
+                                      searchEnabled="true" 
+                                      placeholder="Select Code..."
+                                      style = "background-color: #000; padding-left: 5px; "
+                                      >
+                                  </dx-select-box> 
+                              </div>
+                              <div fxFlex="80px" fxFill style="padding-top: 5px;">
+                                  <dx-select-box
+                                      [dataSource]="boardList"
+                                      [(value)]="input.board" 
+                                      minSearchLength="0"
+                                      showDataBeforeSearch="true"
+                                      searchEnabled="true"
+                                      style = "background-color: #000; padding-left: 5px; margin-left: 10px;"
+                                      >
+                                  </dx-select-box> 
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="5px" fxFill ></div>
+                      <div fxFlex="30px" fxFill>
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill style="padding-right: 5px;">
+  
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="60px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                          Price :
+                                      </div>
+                                      <div fxFlex="calc(100%-60px-50px)" fxFill >
+                                          <dx-text-box placeholder=""
+                                              [(value)]="input.price" 
+                                              (onValueChanged)="onPriceValueChanged($event)"
+                                              [inputAttr]="{'style': 'background:#000'}"
+                                              style = "background-color: #000; padding-left: 5px;"
+                                          ></dx-text-box> 
+                                      </div>
+                                      <div fxFlex="50px" fxFill></div>
+                                  </div>
+  
+                              </div>
+                              <div fxFlex="33%" fxFill style= "padding-right: 5px;"> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="100%" fxFill style="padding-right: 5px;">
+                                          <div fxLayout='row' fxFill >
+                                              <div fxFlex="65px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                                  Quantity :
+                                              </div>
+                                              <div fxFlex="100px" fxFill >
+                                                  <dx-text-box placeholder=""
+                                                      [(value)]="input.quantity" 
+                                                      (onValueChanged)="onQtyValueChanged($event)"
+                                                      [inputAttr]="{ 'style': 'background:#000' }"
+                                                      style = "background-color: #000; padding-left: 5px;"
+                                                  ></dx-text-box> 
+                                              </div>
+                                          </div> 
+                                      </div>
+                                      <div fxFlex="45px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';" fxLayoutAlign="center">
+                                          &nbsp;lot(s)
+                                      </div>
+                                      <div fxFLex ="calc(100%-80px-45px-80px)" fxFill ></div>
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+  
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="60px" fxFill style="padding-top: 8px; font-family: 'Trebuchet MS';">
+                                          Account:
+                                      </div>
+                                      <div fxFlex="calc(100%-60px) " fxFill>
+                                              <dx-select-box
+                                                  (onValueChanged)="account_onChange($event)"
+                                                  [dataSource]="dsAccountList"
+                                                  [(value)]="input['account']"  
+                                                  minSearchLength="0"
+                                                  showDataBeforeSearch="true"
+                                                  searchEnabled="true" 
+                                                  displayExpr="AccountFullName"
+                                                  valueExpr="AccountCode"
+                                                  [inputAttr]="{'style': 'background:#000;' }"
+                                                  style = "background-color: #000; padding-left: 5px;"
+                                                  >
+                                              </dx-select-box> 
+                                          </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="15px" fxFil l></div>
+                      <div fxFlex="20px" fxFill>  
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="45%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-top: solid 2px #404040;">
+                                            Available Qty	
+                                      </div>
+                                      <div fxFlex="45%" fxFill style="text-align: end; padding-right: 5px; font-family: 'Trebuchet MS';  border-right: solid 2px #404040; border-top: solid 2px #404040;  ">
+                                            {{global.numberFormat(data.availableQty,0)}}
+                                          <!-- {{global.numberFormat(data.data494['ForceSellValue'],0)}} -->
+                                      </div>
+                                      <div fxFLex="10%" style=" background-color: #262626" >
+                                        
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="45%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-top: solid 2px #404040;">
+                                          Order Amount
+                                      </div>
+                                      <div fxFlex="45%" fxFill style="text-align: end; padding-right: 5px; font-family: 'Trebuchet MS';  border-right: solid 2px #404040; border-top: solid 2px #404040;  ">
+                                          {{global.numberFormat(data.orderAmmount,0)}}
+                                      </div>
+                                      <div fxFLex="10%" style=" background-color: #262626" >
+                                        
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="50%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-top: solid 2px #404040;">
+                                          Valuation Ratio
+                                      </div>
+                                      <div fxFlex="50%" fxFill style=" padding-right: 5px; text-align: end; font-family: 'Trebuchet MS';  border-right: solid 2px #404040; border-top: solid 2px #404040;  ">
+                                          {{global.numberFormat(data.data494['StockValuationRatioDisplay'],0)}} %
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="20px" fxFill>  
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="45%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-bottom: solid 2px #404040;">
+
+                                    </div>
+                                      <div fxFlex="45%" fxFill style="text-align: end; padding-right: 5px; font-family: 'Trebuchet MS'; border-right: solid 2px #404040; border-bottom: solid 2px #404040; ">
+                                      </div>
+                                  </div>
+                                  <div fxFLex="10%" style=" background-color: #262626" >
+                                        
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="45%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-bottom: solid 2px #404040;">
+                                          Remaining Limit
+                                      </div>
+                                      <div fxFlex="45%" fxFill style="text-align: end; padding-right: 5px;font-family: 'Trebuchet MS'; border-right: solid 2px #404040; border-bottom: solid 2px #404040;"> 
+                                          {{global.numberFormat(data.remainingLimitSell,0)}}
+                                      </div>
+                                      <div fxFLex="10%" style=" background-color: #262626" >
+                                        
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="50%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; " >
+                                          Trading Ratio
+                                      </div>
+                                      <div fxFlex="50%" fxFill style="padding-right: 5px; text-align: end; font-family: 'Trebuchet MS'; border-right: solid 2px #404040; ">
+                                          {{global.numberFormat(data.tradingRatioSell,0)}} %
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="20px" fxFill>  
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill> 
+      
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+      
+                              </div>
+                              <div fxFlex="33%" fxFill> 
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="50%" fxFill style=" padding-left: 5px; font-family: 'Trebuchet MS'; border-left: solid 2px #404040; border-bottom: solid 2px #404040;">
+                                          Avaliable Limit
+                                      </div>
+                                      <div fxFlex="50%" fxFill style="padding-right: 5px; text-align: end; font-family: 'Trebuchet MS'; border-right: solid 2px #404040; border-bottom: solid 2px #404040;">
+                                          {{global.numberFormat(data.data494['LimitAvailable'],0)}}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="20px" fxFill></div>
+                      <div fxFlex="15px" fxFill></div>
+                      <div fxFlex="45px" fxFill>
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill style ="padding-left: 10px"> 
+                                  <dx-radio-group
+                                      [dataSource]="dsSession"
+                                      [(value)]="input['session']"  
+                                  >
+                                  </dx-radio-group>
+                              </div> 
+                              <div fxFlex="33%" fxFill>   
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="60px" fxFill style="padding-top: 5px;font-family: 'Trebuchet MS'; text-align: end; padding-right: 5px;">Split</div>
+                                      <div fxFlex="calc(100%-60px-150px)" fxFill  >    
+                                          <dx-text-box placeholder=""
+                                              id="number"
+                                              [(value)]="input.splitInput"
+                                              height="24px"
+                                              [disabled]="input.isVisible_SplitInput"
+                                              [inputAttr]="{ 'style': 'background:#000; text-align:end; ' }"
+                                              style = "background-color: #000; padding-left: 5px; padding-right: 5px; text-align: end;"
+                                          ></dx-text-box>
+                                      </div>
+                                      <div fxFlex="150px" fxFill style="padding-top: 3px; padding-left: 5px; font-family: 'Trebuchet MS';">
+                                      <dx-check-box
+                                          text="Random"
+                                          >
+                                      </dx-check-box></div>
+                                  </div> 
+                              </div>
+                              <div fxFlex ="33%" fxFill>
+                                <div fxLayout ='row' fxFill>
+                                  <div fxFlex="50%" fxFill fxLayoutAlign="end" style="padding-top: 10px" >
+                                        <dx-button
+                                        text="Sell"
+                                        (onClick)="sendOrder('sell')"
+                                        width="80%"
+                                        [template]="'buttonTemplate'"
+                                        >
+                                        <div *dxTemplate="let data of 'buttonTemplate'" style = "background-color: darkgreen; border: solid 1px #000;"> 
+                                            Sell
+                                        </div>
+                                    </dx-button>
+                                  </div> 
+                                  <div fxFlex="50%" fxFill fxLayoutAlign="end" style="padding-top: 10px">
+                                        <dx-button
+                                        text="Sell"
+                                        (onClick)="closeOrder()"
+                                        width="80%"
+                                        [template]="'buttonTemplate'"
+                                        >
+                                        <div *dxTemplate="let data of 'buttonTemplate'" style = "background-color: #595959; border: solid 1px #000;"> 
+                                            Cancel
+                                        </div>
+                                    </dx-button>
+                                  </div> 
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </dx-popup>
+          <dx-popup title="Order Status"
+              (onShown)="onShownOrderStatus($event)" 
+              [(visible)]="input.isVisible_orderStatus"
+              width="80%"
+              height="80%"
+              shadingColor="rgba(66, 73, 73,.5)"
+              class ="background-order-status"
+              >
+              <div *dxTemplate="let dataItemContent of 'content'">
+                  <div fxLayout='column' fxFill >
+                      <div fxFlex="40px" fxFill>
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="calc(100%-140px-440px)" fxFill>
+                                  <div fxLayout='row' fxFill >
+                                      <div fxFlex="80px" fxFill style="padding-top: 8px;">
+                                          Account :
+                                      </div>
+                                      <div fxFlex="calc(100%-80px-10px)" fxFill>
+                                          <dx-select-box
+                                              (onValueChanged)="account_onChange($event)"
+                                              [dataSource]="dsAccountList"
+                                              [(value)]="input['account']"  
+                                              minSearchLength="0"
+                                              showDataBeforeSearch="true"
+                                              searchEnabled="true" 
+                                              [inputAttr]="{ 'style': 'background:#000' }"
+                                              displayExpr="AccountFullName"
+                                              valueExpr="AccountCode"
+                                              style="background-color: #000; padding-left: 5px;"
+                                              >
+                                          </dx-select-box> 
+                                      </div>
+                                      <div fxFlex="10px" fxFill>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="140px" fxFill fxLayoutAlign ="start">
+                                <dx-button
+                                    style = "background-color: #8497b0;"
+                                    type = "Text"
+                                    text = "Refresh"
+                                    (onClick) ="refreshButton_Clicked($event)">
+                                </dx-button>
+                              </div>
+                              <div fxFlex="440px" fxFill fxLayoutAlign="end">
+                                <div fxLayout='row' fxFill >
+                                    <div fxFlex="110px" fxFill style="padding-top: 7px;">
+                                        Trading Date
+                                    </div>
+                                    <div fxFlex="140px" fxFill>
+                                        <dx-date-box
+                                            displayFormat="d MMM yyyy"
+                                            [min]="minDate"
+                                            [max]="maxDate"
+                                            [(value)]="input.startDate"
+                                            (onValueChanged)="dateBox_valueChanged($event)"
+                                            [inputAttr]="{ 'style': 'background:#000' }"
+                                            style="background-color: #000; padding-left: 5px;">
+                                        </dx-date-box>
+                                    </div>
+                                    <div fxFlex="25px" fxLayoutAlign="center" fxFill style="padding-top: 7px;">
+                                        To
+                                    </div>
+                                    <div fxFlex="140px" fxFill>
+                                        <dx-date-box
+                                            displayFormat="d MMM yyyy"
+                                            [min]="minDate"
+                                            [max]="maxDate"
+                                            [(value)]="input.endDate"
+                                            (onValueChanged)="dateBox_valueChanged($event)"
+                                            [inputAttr]="{ 'style': 'background:#000' }"
+                                            style="background-color: #000; padding-left: 5px;">
+                                        </dx-date-box>
+                                    </div>
+                                </div>
+                            </div> 
+                          </div>      
+                      </div>
+                      <div fxFlex="calc(100%-40px)" fxFill>
+                          <dx-data-grid 
+                              id="gridContainer"
+                              rowAlternationEnabled="true" 
+                              [showRowLines]="false"
+                              [columnAutoWidth]="true" 
+                              [dataSource]="data.data431['NoOrdersArray']"
+                              [showBorders]="false"
+                              height="100%">   
+                              
+                              <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                              <dxo-scrolling mode="infinite"></dxo-scrolling>
+                              <dxo-sorting mode="single"></dxo-sorting>
+                              <!-- <dxo-selection mode="multiple" showCheckBoxesMode="always"></dxo-selection> -->
+                              <dxi-column dataField=" " caption="A" cellTemplate="cellTemplate_Ammend" [width]="22" alignment="center"></dxi-column> 
+                              <dxi-column dataField=" " caption="W" cellTemplate="cellTemplate_Withdraw" [width]="22" alignment="center"></dxi-column> 
+                              <dxi-column dataField=" " caption="T" cellTemplate="cellTemplate_Tracking" [width]="22" alignment="center"></dxi-column> 
+                              <dxi-column dataField=" " caption="S" cellTemplate="cellTemplate_S" [width]="22" alignment="center"></dxi-column> 
+                              <dxi-column dataField=" " caption="H" cellTemplate="cellTemplate_History" [width]="22" alignment="center"></dxi-column> 
+                              <dxi-column dataField="OrderDate" caption="Date"  cellTemplate="cellTemplate_Date" [width]="105" alignment="center" ></dxi-column> 
+                              <dxi-column dataField="OrderTime" caption="Time" cellTemplate="cellTemplate_Time" [width]="85"></dxi-column> 
+                              <dxi-column dataField="Side" caption="Type" cellTemplate="cellTemplate_Type" [width]="45"></dxi-column> 
+                              <dxi-column dataField="TradeTime" caption="Account" cellTemplate="cellTemplate_Account" [width]="75"></dxi-column> 
+                              <dxi-column dataField="Product" caption="Code" cellTemplate="cellTemplate_StockCode" [width]="55"></dxi-column> 
+                              <dxi-column dataField="Board" caption="Board"  [width]="50"></dxi-column> 
+                              <dxi-column dataField="Price" caption="Price" cellTemplate="cellTemplate_Price" ></dxi-column> 
+                              <dxi-column dataField="OrderVolume" caption="Qty" cellTemplate="cellTemplate_OrderVolume"></dxi-column> 
+                              <dxi-column dataField="OrderVolume" caption="O-Amount" cellTemplate="cellTemplate_OrderAmmount" ></dxi-column> 
+                              <dxi-column dataField="TradedVolume" caption="M-Qty" cellTemplate="cellTemplate_OrderVolume"></dxi-column> 
+                              <dxi-column dataField="TradedVolume" caption="M-Amount" cellTemplate="cellTemplate_OrderAmmount"></dxi-column>
+                              <dxi-column dataField="OrderStatus" caption="Status" cellTemplate="cellTemplate_OrderStatus"></dxi-column> 
+                              <dxi-column dataField="IdxOrderId" caption="Order Number" ></dxi-column> 
+                              <div *dxTemplate="let cell of 'cellTemplate_Ammend'">
+                                  
+                                  <div *ngIf="isAllowAmmend(cell.data.OrderStatus)" (click)="openAmmend(cell.data)">
+                                      <img src="/assets/button/A.png" alt="" width="18px" height="18px"> 
+                                  </div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_S'" >
+                                  <div *ngIf="isAllowResend(cell.data.OrderStatus)" (click)="openResend(cell.data)">
+                                      <img src="/assets/button/S.png" alt="" width="18px" height="18px"> 
+                                  </div>
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Withdraw'">
+                                  
+                                  <div *ngIf="isAllowWithdraw(cell.data.OrderStatus)" (click)="opeWithdraw(cell.data)">
+                                      <img src="/assets/button/W.png" alt="" width="18px" height="18px"> 
+                                  </div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Tracking'">
+                                  
+                                  <div *ngIf="cell.data.IdxOrderId!=''" (click)="openTracking(cell.data.IdxOrderId)">
+                                      <img src="/assets/button/Tr.png" alt="" width="18px" height="18px"> 
+                                  </div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplate_History'">
+                                  
+                                  <div (click)="openHistory(cell.data)">
+                                      <img src="/assets/button/H.png" alt="" width="18px" height="18px"> 
+                                  </div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Type'">
+                                  <div [ngClass]="global.setColorSide(cell.data.Side)">{{global.getSideName(cell.text)}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Account'">
+                                  <div>{{input['account']}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_StockCode'">
+                                  <div [ngClass]="global.setColorStock(cell.text)">{{cell.text}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Price'">
+                                  <div >{{global.numberFormat(cell.text,0)}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_BuySellColor'">
+                                  <div [ngClass]="global.setColorSide(cell.data.Side)">{{cell.text}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_OrderVolume'">
+                                  <div [ngClass]="global.setColorSide(cell.data.Side)">{{global.numberFormat(cell.text/100,0)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplate_OrderAmmount'">
+                                  <div>{{global.numberFormat(cell.text*cell.data.Price,0)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplate_OrderStatus'">
+                                  <div [ngClass]="global.setColorOrderStatus(cell.text)">{{global.getOrderStatusName(cell.text)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplate_Date'">
+                                  <div>{{global.dateFormat(cell.text)}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplate_Time'">
+                                  <div>{{global.timeFormat(cell.text)}}</div> 
+                              </div>
+                          </dx-data-grid>   
+                      </div>
+                      <div fxFlex="40px" fxFill>
+                          
+                      </div>
+                  </div>
+              </div>
+          </dx-popup>
+          <!-- Order History -->
+          <dx-popup title="Order History" 
+              (onShown)="onShownOrderHistory($event)"
+              [(visible)]="input.isVisible_orderHistory"
+              width="80%"
+              height="80%"
+              shadingColor="rgba(66, 73, 73,.5)"
+              >
+              <div *dxTemplate="let dataItemContent of 'content'">
+                  <div fxLayout='column' fxFill>
+                      <div fxFlex="140px" fxFill>
+                          <div fxLayout='row' fxFill >
+                              <div fxFlex="33%" fxFill>
+                                  <div fxLayout='column' fxFill >
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Order Number
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['IdxOrderId']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Type
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Side'] == '1' ? 'Buy': 'Sell'}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Code
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Product']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Board
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Board']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Stock Name
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Product']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Account
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{input['account']}}
+                                              </div>
+                                          </div>
+                                      </div> 
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Client Name
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{input['account']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill>
+                                  <div fxLayout='column' fxFill >
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Lot Size
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  100
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Price
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Price']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Qty
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['OrderVolume']/100}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  O-Amount
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{global.numberFormat(orderHistoryData['OrderVolume']*orderHistoryData['Price'],0)}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  RemainQty
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['RemainVolume']/100}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  M-Qty
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['TradedVolume']}}
+                                              </div>
+                                          </div>
+                                      </div> 
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  M-Amount
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['TradedVolume']*orderHistoryData['Price']}}
+                                              </div>
+                                          </div>
+                                      </div> 
+                                  </div>
+                              </div>
+                              <div fxFlex="33%" fxFill>
+                                  <div fxLayout='column' fxFill >
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Order ID
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['OrderId']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Date
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{global.dateFormat(orderHistoryData['OrderDate']+'')}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Time
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{global.timeFormat(orderHistoryData['OrderTime']+'')}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Order Type
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['Tif']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Send Time
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['SentTime']}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Match Time
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{orderHistoryData['LastTradeTime']}}
+                                              </div>
+                                          </div>
+                                      </div> 
+                                      <div fxFlex="20px" fxFill>
+                                          <div fxLayout="row" fxFill>
+                                              <div fxFlex="150px" fxFill>
+                                                  Status
+                                              </div>
+                                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                                  {{statusName(orderHistoryData['OrderStatus'])}}
+                                              </div>
+                                          </div>
+                                      </div> 
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div fxFlex="20px" fxFill>
+                          <div fxLayout="row" fxFill>
+                              <div fxFlex="150px" fxFill>
+                                  Note
+                              </div>
+                              <div fxFlex="calc(100% - 150px)" fxFill>
+                                  {{orderHistoryData['RejectNote']}}
+                              </div>
+                          </div>
+                      </div> 
+                      <div fxFlex="calc(50%-240px)" fxFill>
+                          <dx-data-grid 
+                              id="gridContainer"
+                              rowAlternationEnabled="true" 
+                              [showRowLines]="false"
+                              [columnAutoWidth]="true"
+                              (onCellClick)="onCellClick($event)"
+                              [dataSource]="data.data443"
+                              [showBorders]="false"
+                              height="100%">
+                              <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                              <dxo-scrolling mode="virtual"></dxo-scrolling>
+                              <dxo-sorting mode="none"></dxo-sorting>
+                              <dxi-column dataField="No" caption="No" cellTemplate="cellTemplateNumber"  alignment="left" [width] ="30" ></dxi-column>
+                              <dxi-column dataField="Date" caption="Date" cellTemplate="cellTemplateDate" alignment="center" [width] ="120" ></dxi-column>
+                              <dxi-column dataField="Time" caption="Time" cellTemplate="cellTemplateTime" alignment="center" ></dxi-column> 
+                              <dxi-column dataField="InputUser" caption="User ID" ></dxi-column> 
+                              <dxi-column dataField="IdxOrderId" caption="IDX Order ID" ></dxi-column> 
+                              <dxi-column dataField="Status" caption="Status" cellTemplate="cellTemplateStatus"></dxi-column> 
+                              <dxi-column dataField="Notes" caption="Notes" ></dxi-column> 
+                              <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                                <div >{{global.numberFormat0(cell.text,0)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplateDate'">
+                                  <div>{{global.dateFormat(cell.text)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplateTime'">
+                                  <div>{{global.timeFormat(cell.text)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplateStatus'">
+                                  <div>{{global.getOrderStatusName(cell.text)}}</div>
+                              </div>
+                          </dx-data-grid>  
+                      </div> 
+                      <div fxFlex="30px" style="background-color:#333;padding-top:5px;" fxFill fxLayoutAlign="center">
+                          Trade Summary
+                      </div>  
+                      <div fxFlex="calc(50%-240px-30px)" fxFill>
+                          <dx-data-grid 
+                              id="gridContainer"
+                              rowAlternationEnabled="true" 
+                              [showRowLines]="false"
+                              [columnAutoWidth]="true"
+                              (onCellClick)="onCellClick($event)"
+                              [dataSource]="data.data444"
+                              [showBorders]="false"
+                              height="100%">
+                              <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                              <dxo-scrolling mode="virtual"></dxo-scrolling>
+                              <dxo-sorting mode="none"></dxo-sorting>
+                              <dxi-column dataField="No" caption="No" cellTemplate="cellTemplateNumber"></dxi-column>
+                              <dxi-column dataField="Price" caption="Price" ></dxi-column>
+                              <dxi-column dataField="Volume" caption="Volume" cellTemplate="cellTemplateVolume" ></dxi-column> 
+                              <dxi-column dataField="Volume" caption="Shares" ></dxi-column> 
+                              <dxi-column dataField="" caption="Value" cellTemplate="cellTemplateValue" ></dxi-column>  
+                              <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                                <div>{{global.numberFormat0(cell.text,0)}}</div> 
+                              </div>  
+                              <div *dxTemplate="let cell of 'cellTemplateVolume'">
+                                <div>{{global.numberFormat0(cell.text/100,0)}}</div> 
+                              </div> 
+                              <div *dxTemplate="let cell of 'cellTemplateValue'">
+                                <div>{{global.numberFormat0(cell.data.Price*cell.data.Volume,0)}}</div> 
+                              </div> 
+                          </dx-data-grid>  
+                      </div> 
+                  </div>
+              </div>
+          </dx-popup>
+          <!-- Order Amend  -->
+          <dx-popup title="Amend Form"
+              (onShown)="onShownOrderAmend($event)" 
+              [(visible)]="input.isVisible_orderAmend"
+              width="900px"
+              height="550px"
+              shadingColor="rgba(66, 73, 73,.5)">
+              <div *dxTemplate="let dataItemContent of 'content'">
+                  <div fxLayout='row' fxFill >
+                      <div fxFlex="70%" fxFill>
+                          <div fxLayout="column" fxFill>
+                              <div fxFlex="31px" fxFill>
+                                  Amend {{data.dataAmend['Side']=='1'?"Buy":"Sell"}} Order
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label-value">
+                                              {{global.getSelectedAccount()}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-160px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{input.accountName}}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Stock Code
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-260px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['Product']}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="100px" style="padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              RG
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Order ID
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-160px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['OrderId']}}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              IDX Order ID
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-160px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['IdxOrderId']}}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Old Price
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-450px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['Price']}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="120px" fxFill>
+                                          <div class="label">
+                                              New Price
+                                          </div>
+                                      </div>
+                                      <div fxFlex="160px" style="padding-right:5px;" fxFill>
+                                          <dx-text-box placeholder=""
+                                          [(value)]="input.newPrice"
+                                          mode="text"
+                                          class="input-price"
+                                          ></dx-text-box>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Old Vol (Lot)
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-450px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['OrderVolume']/100}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="120px" fxFill>
+                                          <div class="label">
+                                              New Vol (Lot)
+                                          </div>
+                                      </div>
+                                      <div fxFlex="160px" style="padding-right:5px;" fxFill>
+                                          <dx-text-box placeholder=""
+                                          [(value)]="input.newVol"
+                                          mode="text"
+                                          class="input-price"
+                                          ></dx-text-box>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Traded Vol (Lot)
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-450px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['TradedVolume']/100}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="280px"style="padding-left:5px; padding-top:2px;" fxFill>
+                                          <dx-check-box
+                                              text="Confirmation"
+                                              [(value)]="input.confirmation" 
+                                             >
+                                          </dx-check-box>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div fxFlex="160px" fxFill>
+                                          <div class="label">
+                                              Remain Vol (Lot)
+                                          </div>
+                                      </div>
+                                      <div fxFlex="calc(100%-450px)" style="padding-left:5px; padding-right:5px;" fxFill>
+                                          <div class="label-value">
+                                              {{data.dataAmend['RemainVolume']/100}}
+                                          </div>
+                                      </div>
+                                      <div fxFlex="280px" fxFill>
+                                          &nbsp;
+                                      </div>
+                                  </div>
+                              </div>
+                              <div fxFlex="100px"></div>
+                              <div fxFlex="100px">
+                                  <div fxLayout="row" class="btn-amend-container" fxFlex="100%" fxFill>
+                                      <div fxFlex="50%" style="text-align:center;" fxFill>
+                                          <dx-button 
+                                          #buttonHeader 
+                                          type="Text"
+                                          text="Amend"
+                                          (onClick)="doAmend()"
+                                          [elementAttr]="{ class: 'amend-btn' }"
+                                          >
+                                          </dx-button>
+                                      </div>
+                                      <div fxFlex="50%" style="text-align:center;" fxFill>
+                                          <dx-button 
+                                          #buttonHeader 
+                                          type="Text"
+                                          text="Cancel"
+                                          (onClick)="doCancelAmend()"
+                                          [elementAttr]="{ class: 'amend-btn' }"
+                                          >
+                                          </dx-button>
+                                      </div>
+                                  </div> 
+                              </div>
+                          </div>
+                          
+                      </div>
+                      <div fxFlex="30%" fxFill>
+                          <div fxLayout="column">
+                              <div fxFlex="31px" fxFill>
+                                  <div fxLayout="row" fxFlex="100%" fxFill>
+                                      <div class="product-desc" [ngClass]="global.setColorStock(data.dataAmend['Product'])">
+                                          {{data.dataAmend['Product']}} - {{global.getStockNameFromCode(data.dataAmend['Product'])}}
+                                      </div>
+                                  </div>
+                              </div>
+                          <dx-data-grid 
+                              id="gridContainer"
+                              rowAlternationEnabled="true" 
+                              [showRowLines]="false"
+                              [columnAutoWidth]="true"
+                              (onCellClick)="onCellClick($event)"
+                              [dataSource]="data.data2"
+                              [showBorders]="false"
+                              height="100%">
+                              <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                              <dxo-scrolling mode="virtual"></dxo-scrolling>
+                              <dxo-sorting mode="none"></dxo-sorting>
+                              <dxi-column dataField="BidVol" caption="B#" cellTemplate="cellTemplateNumber"></dxi-column>
+                              <dxi-column dataField="BidLot" caption="BLot" cellTemplate="cellTemplateYellowNumber"></dxi-column>
+                              <dxi-column dataField="BidPrice" caption="Bid" cellTemplate="cellTemplatePrice"></dxi-column>
+                              <dxi-column dataField="OfferPrice" caption="Offer" cellTemplate="cellTemplatePrice"></dxi-column> 
+                              <dxi-column dataField="OfferLot" caption="OLot" cellTemplate="cellTemplateYellowNumber"></dxi-column> 
+                              <dxi-column dataField="OfferVol" caption="O#" cellTemplate="cellTemplateNumber"></dxi-column> 
+                              <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                                <div [ngClass]="global.colorFormat(cell.text-data['data1']['PreviousPrice'])">{{global.numberFormat0(cell.text,0)}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                                <div>{{global.numberFormat0(cell.text,0)}}</div> 
+                              </div>
+                              <div *dxTemplate="let cell of 'cellTemplateYellowNumber'">
+                                <div [ngClass]="global.colorFormat(0)">{{global.numberFormat0(cell.text,0)}}</div> 
+                              </div>
+                          </dx-data-grid>  
+                          </div> 
+                      </div>
+                  </div>
+              </div>
+          </dx-popup>
+          <dx-load-panel
+              [closeOnOutsideClick]="false"
+              [(visible)]="isLoadPanelVisible">
+          </dx-load-panel>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+  </div>   

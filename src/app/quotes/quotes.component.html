@@ -1,0 +1,511 @@
+ <dx-popup
+  (onShown)="onShownPersonalQuote($event)"
+  title="Modify Personal List"
+  [(visible)]="input.isVisible_editPersonalQuote"
+  closeOnBackButton="false"
+  showCloseButton="false"
+  width="40%"
+  height="80%"
+  shadingColor="rgba(66, 73, 73,.5)">
+  <div *dxTemplate="let dataItemContent of 'content'">
+    <div fxLayout='column' fxFill >
+      <div fxFlex="45px">
+        <div fxLayout='row' fxFill >
+          <div fxFlex="100%" style="vertical-align: middle;display: flex;align-items: center;"> 
+            <dx-select-box 
+              (onOpened)="box1_onOpened($event)"
+              (onFocusIn)="box1_onOpened($event)"
+              [inputAttr]="{ id: 'inputBox1ID' }"
+              [dataSource]="dsStockList"
+              [(value)]="input['code']" 
+              (onValueChanged)="stockInput_onChange($event)"
+              displayExpr="ProductFullName"
+              valueExpr="ProductCodeBoard"
+              spellcheck="true" 
+              minSearchLength="0"
+              showDataBeforeSearch="false"
+              searchEnabled="true"
+              width="100%"      
+              itemTemplate="item" 
+              placeholder="Select Code to Add..."
+              style="border-top:2px solid #999; border-left:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; padding-left:10px;"
+              
+              > 
+              <div *dxTemplate="let data of 'item'"> 
+                <span [ngClass]="global.setColorStock(data.ProductCode)">{{data.ProductFullName}}</span>
+              </div>
+            </dx-select-box> 
+          </div> 
+        </div>
+      </div>
+      
+      <div fxFlex="calc(100%-45px-50px-15px)" fxFill fxLayoutAlign="center">  
+        <dx-list
+          [(dataSource)]="input.listPersonalQuote"
+          [searchEnabled]="false"
+          [allowItemDeleting]="true"
+          [allowItemReordering]="true"
+          height="100%"
+          itemTemplate="listItem"
+          (onItemReordered)="onItemReordered($event)"
+          >
+          <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index" >
+            <span [ngClass]="global.setColorStock(getStockFromMergeData(itemData))" >{{getDisplayFromMergeData(itemData)}} - {{global.getStockNameFromCode(getStockFromMergeData(itemData))}}</span>
+          </div>
+          <dxi-item>
+            <div *dxTemplate>
+                <dx-button text="Add Stock"></dx-button>
+            </div>
+          </dxi-item>
+        </dx-list >
+      </div> 
+      <div fxFlex="15px" fxFill fxLayoutAlign="center">  
+      </div>
+      <div fxFlex="50px" fxLayoutAlign="center" fxFill style="vertical-align: middle;display: flex;align-items: center;"> 
+          <dx-button 
+            #buttonHeader 
+            type="Text"
+            style="color:#ffbd21; background-color:rgba(255,189,33,0.08)"
+            (onClick)="savePersonalQuoteData($event)"
+            width="100px"
+            height="35px"
+            >
+            Save  
+          </dx-button>
+        </div> 
+    </div>
+  </div>
+</dx-popup>
+<dx-popup
+  (onShown)="onShownAddPersonalQuote($event)"
+  title="Personal Quote Add"
+  [(visible)]="input.isVisible_addPersonalQuote"
+  closeOnBackButton="false"
+  showCloseButton="false"
+  width="60%"
+  height="70%">
+  <div *dxTemplate="let dataItemContent of 'content'">
+    <dx-select-box
+
+        (onOpened)="box1_onOpened($event)"
+        [inputAttr]="{ id: 'inputBox1ID' }"
+        [dataSource]="dsStockList"
+        [(value)]="input['code']" 
+        (onValueChanged)="stockInput_onChange($event)"
+         displayExpr="ProductFullName"
+        valueExpr="ProductCode"
+        spellcheck="true"
+        [(opened)]="input.isVisible_addPersonalQuote"
+        minSearchLength="0"
+        showDataBeforeSearch="true"
+        searchEnabled="true">
+    </dx-select-box> 
+  </div>
+</dx-popup>
+<dx-popup  
+  [(visible)]="input.isVisible_notifyModify" 
+  title="Information"
+  closeOnOutsideClick="true"
+  dragEnabled="false"
+  showCloseButton="false"
+  [showTitle]="true"
+  width="420px"
+  height="250px"
+  shadingColor="rgba(66, 73, 73,.5)">
+  <div *dxTemplate="let data of 'content'" style="text-align: center">
+     <div fxLayout='column' fxFill >
+      <div fxFlex="20px " fxFill fxLayoutAlign="center">  
+      </div>
+      <div fxFlex="20px " style="font-size:16px;" fxFill fxLayoutAlign="center">  
+        <span style="text-decoration: underline;">Right Click</span>&nbsp;to modify your list
+      </div> 
+       
+      <div fxFlex="20px " fxFill fxLayoutAlign="center">  
+      </div>
+      <div fxFlex="30px " fxFill fxLayoutAlign="center"> 
+        <dx-button 
+          #buttonHeader 
+          type="Text"
+          style="color:#ffbd21; background-color:rgba(255,189,33,0.08)"
+          (onClick)="closeNotifyModify($event)"
+          width="100px"
+          height="45px"
+          >
+          Ok  
+        </dx-button>
+      </div>
+      <div fxFlex="30px " fxFill fxLayoutAlign="center"> 
+        
+        </div>
+      <div fxFlex="20px" style="text-align: left; font-weight: normal; font-size: 9px; padding-top:10px;" fxFill > 
+        <dx-check-box
+          text="Do not show again" 
+          (onValueChanged)="checkBoxToggled($event)">
+        </dx-check-box>
+      </div>
+    </div>
+  </div> 
+</dx-popup>
+<dx-popup  
+  [(visible)]="input.isVisible_errorPersonalQuote" 
+  title="Information"
+  closeOnOutsideClick="true"
+  dragEnabled="false"
+  showCloseButton="false"
+  [showTitle]="true"
+  width="300px"
+  height="160px"
+  shadingColor="rgba(66, 73, 73,.5)">
+  <div *dxTemplate="let data of 'content'"  style="text-align: center">
+     <div fxLayout='column' fxFill >
+      <div fxFlex="20px " fxFill fxLayoutAlign="center">  
+        Code already exsist
+      </div> 
+      <div fxFlex="5px " fxFill fxLayoutAlign="center"> 
+        
+      </div> 
+      <div fxFlex="15px " fxFill fxLayoutAlign="center">  
+      </div>
+      <div fxFlex="30px " fxFill fxLayoutAlign="center"> 
+        <dx-button 
+          #buttonHeader 
+          type="Text"
+          style="color:#ffbd21; background-color:rgba(255,189,33,0.08)"
+          (onClick)="closeNotifyModify2($event)"
+          width="100px"
+          height="35px"
+          >
+          Ok  
+        </dx-button>
+      </div>
+    </div>
+  </div> 
+</dx-popup>
+<div fxLayout='column' fxFill >
+    <div fxFlex="70px " fxFill> 
+        <app-header></app-header>
+      </div>
+  <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: black"> 
+    <div fxLayout='column' fxFill >
+      <div fxFlex="42px" fxFill> 
+        <dx-tabs 
+          #apiTabs
+          [items]="tabs"
+          [selectedIndex]="0"
+          (onItemClick)="clickSelectTab($event)"
+          itemTemplate="listItem"
+          height="100%"
+          class="custom-tabs"
+        >
+          <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index" >
+            <div *ngIf="selectTab==itemData.display" class="new-text" style="vertical-align: middle;display: flex;align-items: center;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+            <div *ngIf="selectTab!=itemData.display" class="new-text" style="vertical-align: middle;display: flex;align-items: center;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+          </div>
+      </dx-tabs>
+      </div>
+    
+      <div fxFlex="calc(100%-42px)" *ngIf="selectTab=='Personal Quote'">
+        <dx-data-grid 
+          #targetDataGridPQ
+          id="gridContainer"
+          [showRowLines]="false"
+          [showColumnLines]="false"
+          [columnAutoWidth]="true"
+          [dataSource]="personalQuoteData"
+          [allowColumnResizing]="true"
+          [showBorders]="false"
+          [allowColumnReordering]="true"
+          (onContextMenuPreparing)="menuPreparing($event)"
+          height="100%"
+          [rowAlternationEnabled]="true" 
+          hoverStateEnabled="true"
+        >      
+        <dxo-selection
+          mode="single"
+          [allowSelectAll]="false"
+          [deferred]="false">
+        </dxo-selection>
+        
+        <dxo-load-panel [enabled]="false"></dxo-load-panel>
+        <dxo-scrolling mode="infinite"></dxo-scrolling>
+        <dxo-sorting mode="single"></dxo-sorting>    
+
+        <dxi-column dataField="Stock" caption="Stock" fixed="true" fixedPosition="left" cellTemplate="cellTemplateStockColor"></dxi-column> 
+        <dxi-column dataField="Name" caption="Name" cellTemplate="cellTemplateStockColor"></dxi-column> 
+        <dxi-column dataField="Board" caption="Board" cellTemplate="cellGray"></dxi-column> 
+        <dxi-column dataField="BidVol" caption="B Vol" cellTemplate="cellTemplateNumberFormat" ></dxi-column>  
+        <dxi-column dataField="Bid" caption="Bid" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Offer" caption="Offer" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="OVol" caption="O Vol" cellTemplate="cellTemplateNumberFormat"></dxi-column>  
+        <dxi-column dataField="Last" caption="Last" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Open" caption="Open" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="High" caption="High" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Low" caption="Low" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Close" caption="Close" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Chg" caption="Chg" cellTemplate="cellTemplateNumberChgFormat"></dxi-column>  
+        <dxi-column dataField="ChgPercent" caption="Chg(%)" cellTemplate="cellTemplateNumberChgPctFormat"></dxi-column>  
+        <dxi-column dataField="WAP" caption="WAP" cellTemplate="cellTemplateNumberFromPrevFormat"></dxi-column>  
+        <dxi-column dataField="Vol" caption="Vol" cellTemplate="cellTemplateNumberFormat"></dxi-column>  
+        <dxi-column dataField="TVal" caption="TVal" cellTemplate="cellTemplateValue"></dxi-column>  
+        <dxi-column dataField="TFreq" caption="TFreq" cellTemplate="cellTemplateNumberFormat"></dxi-column>  
+        <dxi-column dataField="TVol" caption="TVol" cellTemplate="cellTemplateNumberFormat"></dxi-column>  
+        <dxi-column dataField="FgnBVal" caption="FgnBVal" cellTemplate="cellTemplateBVal"></dxi-column>  
+        <dxi-column dataField="FgnSVal" caption="FgnSVal" cellTemplate="cellTemplateSVal"></dxi-column>  
+        <dxi-column dataField="FgnNVal" caption="FgnNVal" cellTemplate="cellTemplateNumberColorFormat"></dxi-column>  
+        
+        <div *dxTemplate="let cell of 'cellTemplateStockColor'" >
+          <div [ngClass]="global.setColorStock(cell.data.Stock)">{{cell.text}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellGray'" >
+            <div style="color:rgb(170,170,170)">{{cell.text}}</div> 
+          </div>
+        <div *dxTemplate="let cell of 'cellTemplateNumberFormat'">
+          <div style="color:rgb(170,170,170)" >{{global.kmbtFormat(cell.text,2)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateNumberFromPrevFormat'">
+          <div [ngClass]="global.colorFormat(cell.text-cell.data.Close)">{{global.numberFormat(cell.text,0)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateNumberChgFormat'">
+          <div [ngClass]="global.colorFormat(cell.data.Chg)">{{global.numberSignFormat(cell.text,0)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateNumberChgPctFormat'">
+          <div [ngClass]="global.colorFormat(cell.data.Chg)">{{global.numberSignFormat(cell.text,2)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateNumberColorFormat'">
+          <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateBVal'">
+          <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+        </div>
+        <div *dxTemplate="let cell of 'cellTemplateSVal'">
+          <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+        </div> 
+        <div *dxTemplate="let cell of 'cellTemplateValue'">
+          <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+        </div>
+      </dx-data-grid>
+      </div>  
+      <div fxFlex="calc(90%-42px)" *ngIf="selectTab=='IDX Sector'">
+        <dx-data-grid 
+          #targetDataGrid
+          id="gridContainer"
+          [rowAlternationEnabled]="true" 
+          [showRowLines]="false"
+          [showColumnLines]="false"
+          [columnAutoWidth]="true"
+          [dataSource]="IDXSectorData"
+          [allowColumnResizing]="true"
+          [showBorders]="false"
+          [allowColumnReordering]="true"
+          height="100%"
+          >      
+          <dxo-selection
+            mode="single"
+            [allowSelectAll]="false"
+            [deferred]="false">
+          </dxo-selection>
+          
+          <dxo-load-panel [enabled]="false"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>    
+
+          <dxi-column dataField="IndicesCode" caption="Indices" cellTemplate="cellTemplateText" ></dxi-column> 
+          <dxi-column dataField="LastIndices" caption="Last" cellTemplate="cellTemplateNumberFormat"></dxi-column> 
+          <dxi-column dataField="ChangeIndices" caption="Chg" cellTemplate="cellTemplateNumberChgFormat"></dxi-column> 
+          <dxi-column dataField="ChangePercentIndices" caption="Chg(%)" cellTemplate="cellTemplateNumberChgPctFormat"></dxi-column>  
+          <dxi-column dataField="HighIndices" caption="High" cellTemplate="cellTemplateNumberFormat"></dxi-column> 
+          <dxi-column dataField="LowIndices" caption="Low" cellTemplate="cellTemplateNumberFormat"></dxi-column> 
+          <dxi-column dataField="OpenIndices" caption="Open" cellTemplate="cellTemplateNumberFormat"></dxi-column> 
+          <dxi-column dataField="PreviousIndices" caption="Close" cellTemplate="cellTemplateNumberFormat"></dxi-column> 
+          <dxi-column dataField="TotalFreq" caption="TFreq" cellTemplate="cellTemplateVolume"></dxi-column> 
+          <dxi-column dataField="TotalValue" caption="TVal" cellTemplate="cellTemplateValue"></dxi-column> 
+          <dxi-column dataField="TotalVolume" caption="TVol" cellTemplate="cellTemplateVolume"></dxi-column> 
+          <dxi-column dataField="ForeignBuyValue" caption="Fgn BVal" cellTemplate="cellTemplateBVal"></dxi-column> 
+          <dxi-column dataField="ForeignSellValue" caption="Fgn SVal" cellTemplate="cellTemplateSVal"></dxi-column> 
+          <dxi-column dataField="ForeignNetValue" caption="Fgn NVal" cellTemplate="cellTemplateNVal"></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumberChgFormat'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeIndices)">{{global.numberSignFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumberChgPctFormat'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeIndices)">{{global.numberSignFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumberFormat'">
+            <div [ngClass]="global.colorFormat(cell.text-cell.data.PreviousIndices)">{{global.numberFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumberChange'">
+            <div [ngClass]="global.colorFormat(cell.text )">{{global.numberFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplatePercent'">
+            <div [ngClass]="global.colorFormat(cell.text)">{{global.numberFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateValue'">
+            <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateVolume'">
+            <div style="color:rgb(170,170,170)">{{global.kmbtFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateBVal'">
+            <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateSVal'">
+            <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNVal'">
+            <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+          </div>
+        </dx-data-grid>
+      </div>
+      <div fxFlex="calc(90%-42px)" *ngIf="selectTab=='World Index'">
+        <dx-data-grid 
+          #targetDataGrid
+          id="gridContainer"
+          [rowAlternationEnabled]="true" 
+          [showRowLines]="false"
+          [showColumnLines]="false"
+          [columnAutoWidth]="true"
+          [dataSource]="worldIndexData"
+          [allowColumnResizing]="true"
+          [showBorders]="false"
+          [allowColumnReordering]="true"
+          height="100%"
+          >      
+          <dxo-selection
+            mode="single"
+            [allowSelectAll]="false"
+            [deferred]="false">
+          </dxo-selection>
+          
+          <dxo-load-panel [enabled]="false"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="single"></dxo-sorting>    
+
+          <dxi-column dataField="Name" caption="Name" [sortIndex]="0" sortOrder="asc" cellTemplate ="cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Value" caption="Last" cellTemplate="cellTemplateNumber"></dxi-column>
+          <dxi-column dataField="ChangeValue" caption="Chg" cellTemplate="cellTemplateChangeNumber"></dxi-column> 
+          <dxi-column dataField="ChangePercent" caption="Chg(%)" cellTemplate="cellTemplateChangePctNumber"></dxi-column> 
+          <dxi-column dataField="Date" caption="Date" cellTemplate="cellTemplateDate" alignment="center"></dxi-column> 
+          <dxi-column dataField="Time" caption="Time" alignment="center" cellTemplate ="cellTemplateText" ></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangeNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangePctNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateDate'">
+            <div  style = "color : rgb(170,170,170) ">{{global.dateFormat(cell.text)}}</div> 
+          </div>
+        </dx-data-grid>
+      </div>
+      <div fxFlex="calc(90%-42px)" *ngIf="selectTab=='Currency'">
+        <dx-data-grid 
+          #targetDataGrid
+          id="gridContainer"
+          [rowAlternationEnabled]="true" 
+          [showRowLines]="false"
+          [showColumnLines]="false"
+          [columnAutoWidth]="true"
+          [dataSource]="currencyData"
+          [allowColumnResizing]="true"
+          [showBorders]="false"
+          [allowColumnReordering]="true"
+          height="100%"
+          >      
+          <dxo-selection
+            mode="single"
+            [allowSelectAll]="false"
+            [deferred]="false">
+          </dxo-selection>
+          
+          <dxo-load-panel [enabled]="false"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="single"></dxo-sorting>    
+
+          <dxi-column dataField="Name" caption="Name" [sortIndex]="0" sortOrder="asc" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Value" caption="Last" cellTemplate="cellTemplateNumber"></dxi-column>
+          <dxi-column dataField="ChangeValue" caption="Chg" cellTemplate="cellTemplateChangeNumber"></dxi-column> 
+          <dxi-column dataField="ChangePercent" caption="Chg(%)" cellTemplate="cellTemplateChangePctNumber"></dxi-column> 
+          <dxi-column dataField="Date" caption="Date" cellTemplate="cellTemplateDate" alignment="center"></dxi-column> 
+          <dxi-column dataField="Time" caption="Time" alignment="center" cellTemplate = "cellTemplateText" ></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangeNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangePctNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateDate'">
+            <div  style = "color : rgb(170,170,170) " >{{global.dateFormat(cell.text)}}</div> 
+          </div>
+        </dx-data-grid>
+      </div>
+      <div fxFlex="calc(90%-42px)" *ngIf="selectTab=='Commodity'">
+        <dx-data-grid 
+          #targetDataGrid
+          id="gridContainer"
+          [rowAlternationEnabled]="true" 
+          [showRowLines]="false"
+          [showColumnLines]="false"
+          [columnAutoWidth]="true"
+          [dataSource]="commodityData"
+          [allowColumnResizing]="true"
+          [showBorders]="false"
+          [allowColumnReordering]="true"
+          height="100%"
+          >      
+          <dxo-selection
+            mode="single"
+            [allowSelectAll]="false"
+            [deferred]="false">
+          </dxo-selection>
+          
+          <dxo-load-panel [enabled]="false"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>    
+  
+          <dxi-column dataField="Name" caption="Name" [sortIndex]="0" sortOrder="asc" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Value" caption="Last" cellTemplate="cellTemplateNumber"></dxi-column>
+          <dxi-column dataField="ChangeValue" caption="Chg" cellTemplate="cellTemplateChangeNumber"></dxi-column> 
+          <dxi-column dataField="ChangePercent" caption="Chg(%)" cellTemplate="cellTemplateChangePctNumber"></dxi-column> 
+          <dxi-column dataField="Date" caption="Date" cellTemplate="cellTemplateDate" alignment="center"></dxi-column> 
+          <dxi-column dataField="Time" caption="Time" alignment="center" cellTemplate = "cellTemplateText" ></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangeNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateChangePctNumber'">
+            <div [ngClass]="global.colorFormat(cell.data.ChangeValue)">{{global.numberSignFormat(cell.text,2)}}</div> 
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateDate'">
+            <div style = "color : rgb(170,170,170)" >{{global.dateFormat(cell.text)}}</div> 
+          </div>
+        </dx-data-grid>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill style = "border-top: solid 1px white;"> 
+    <app-footer></app-footer>
+  </div>
+</div>

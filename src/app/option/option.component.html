@@ -1,0 +1,298 @@
+<dx-popup
+  (onShown)="onShownPWD($event)"
+  title="Change Password"
+  [(visible)]="input.isVisible_PWD"
+  width="350px"
+  height="210px">
+  <div *dxTemplate="let dataItemContent of 'content'">
+    <div fxLayout='column' fxFill >
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class = "textPasswordPin"> Old Password </a>
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.oldPassword"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class = "textPasswordPin"> New Password </a>
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.newPassword"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class = "textPasswordPin"> Confirm Password </a> Password
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.confirmPassword"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill fxLayoutAlign="center">
+        <dx-button
+          text="Change Password"
+          (onClick)="sendChangePassword()"
+          width="80%">
+        </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+<dx-popup
+  (onShown)="onShownPIN($event)"
+  title="Change PIN"
+  [(visible)]="input.isVisible_PIN"
+  width="350px"
+  height="210px">
+  <div *dxTemplate="let dataItemContent of 'content'">
+    <div fxLayout='column' fxFill >
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class="textPasswordPin"> Old PIN </a>
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.oldPIN"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class="textPasswordPin"> New PIN </a>
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.newPIN"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill> 
+        <div fxLayout='row' fxFill >
+          <div fxFlex="40%" fxFill> 
+            <a class="textPasswordPin"> Confirm PIN </a>
+          </div>
+          <div fxFlex="60%" fxFill> 
+            <dx-text-box placeholder=""
+              [(value)]="input.confirmPIN"
+              mode="password"
+              height="24px"
+            ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20% 30px 30px" fxFill fxLayoutAlign="center">
+        <dx-button
+          text="Change PIN"
+          (onClick)="sendChangePIN()"
+          width="80%">
+        </dx-button>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+<div fxLayout='column' fxFill >
+  <div fxFlex="70px" fxFill> 
+      <div fxLayout='row' fxFill >
+        <div fxFlex="100% 1024px auto" fxFill> 
+          <app-header></app-header>
+        </div>
+      </div>
+  </div>
+  <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: rgb(64,64,64)"> 
+    <!--&nbsp;
+    <dx-button 
+      #buttonHeader 
+      type="Text"
+      (onClick)="changePWD()"
+      [elementAttr]="{ class: 'buttonOption' }"
+      [template]="'buttonTemplate'">
+          <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+              <img src="/assets/icons/ChangePWD.png" alt="" width="50px" height="50px"> 
+          </div> 
+    </dx-button>
+    &nbsp;
+    <dx-button 
+      #buttonHeader 
+      type="Text"
+      (onClick)="changePIN()"
+      [elementAttr]="{ class: 'buttonOption' }"
+      [template]="'buttonTemplate'">
+          <div *dxTemplate="let buttonData of 'buttonTemplate'" >
+              <img src="/assets/icons/ChangePIN.png" alt="" width="50px" height="50px"> 
+          </div> 
+    </dx-button>-->
+    <div fxLayout="column" fxFill>
+      <div fxFlex="41px" style="padding-top:2px; padding-bottom:2px; border-bottom:1px solid #666;">
+        <dx-tabs 
+            #apiTabs
+            [items]="tabs"
+            [selectedIndex]="0"
+            (onItemClick)="clickSelectTab($event)"
+            itemTemplate="listItem"
+            height="100%"
+            width="30%"
+            class="custom-tabs"
+          >
+            <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index" >
+              <div *ngIf="selectTab==itemData.display" class="new-text" style="vertical-align: middle;display: flex;align-items: center; font-size:14px; text-transform: capitalize;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+              <div *ngIf="selectTab!=itemData.display" class="new-text" style="vertical-align: middle;display: flex;align-items: center; font-size:14px; text-transform: capitalize;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+            </div>
+        </dx-tabs>
+      </div>
+      <div fxLayout="column" style="padding:1px;" *ngIf="selectTab == 'Change Password'">
+        <div class="field-container-user">
+          <div fxFlex="50%" class="field-label" class = "textPasswordPin">User ID</div>
+          <div class="field-input">
+              <dx-text-box placeholder=""
+              [(value)]="input.userId"
+              mode="text"
+              class="custom-textbox"
+              [disabled]="true"
+            ></dx-text-box>
+          </div>
+        </div>
+        <div class="field-container">
+          <div fxFlex="50%" class="field-label" class = "textPasswordPin">Old Password</div>
+          <div class="field-input">
+              <dx-text-box placeholder=""
+              name="oldPassword"
+              [(value)]="input.oldPassword"
+              mode="password"
+              class="custom-textbox"
+              (keyup.enter) ="enterOldPassword()"
+            ></dx-text-box>
+          </div>
+        </div>
+        <div  class="field-container">
+          <div fxFlex="50%" class="field-label" class = "textPasswordPin">New Password</div>
+          <div class="field-input">
+              <dx-text-box placeholder=""
+              name="newPassword"
+              [(value)]="input.newPassword"
+              mode="password"
+              class="custom-textbox"
+              (keyup.enter) ="enterNewPassword() "
+            ></dx-text-box>
+          </div>
+        </div>
+        <div class="field-container">
+          <div fxFlex="50%" class="field-label" class = "textPasswordPin">Confirm Password</div>
+          <div class="field-input">
+              <dx-text-box placeholder=""
+              name="confirmPassword"
+              [(value)]="input.confirmPassword"
+              mode="password"
+              class="custom-textbox"
+              (keyup.enter)= "sendChangePassword()"
+            ></dx-text-box>
+          </div>
+        </div>
+        <div class="button-container">
+            <dx-button 
+              #buttonHeader 
+              type="Text"
+              (onClick)="sendChangePassword()"
+              [elementAttr]="{ class: 'button-custom' }">
+                  Submit
+            </dx-button>
+        </div>
+      </div>
+      <div fxLayout="column" style="padding:1px;" *ngIf="selectTab == 'Change PIN'">
+          <div class="field-container-user">
+            <div fxFlex="50%" class="field-label" class = "textPasswordPin">User ID</div>
+            <div class="field-input">
+                <dx-text-box placeholder=""
+                [(value)]="input.userId"
+                mode="text"
+                class="custom-textbox"
+                [disabled]="true"
+              ></dx-text-box>
+            </div>
+          </div>
+          <div class="field-container">
+            <div fxFlex="50%" class="field-label" class = "textPasswordPin">Old PIN</div>
+            <div class="field-input">
+                <dx-text-box placeholder=""
+                name="oldPIN"
+                [(value)]="input.oldPIN"
+                mode="password"
+                class="custom-textbox"
+                (keyup.enter)= "enterOldPin()"
+              ></dx-text-box>
+            </div>
+          </div>
+          <div class="field-container">
+            <div fxFlex="50%" class="field-label" class = "textPasswordPin">New PIN</div>
+            <div class="field-input">
+                <dx-text-box placeholder=""
+                name="newPIN"
+                [(value)]="input.newPIN"
+                mode="password"
+                class="custom-textbox"
+                (keyup.enter)= "enterNewPin()"
+              ></dx-text-box>
+            </div>
+          </div>
+          <div class="field-container">
+            <div fxFlex="50%" class="field-label" class = "textPasswordPin">Confirm PIN</div>
+            <div class="field-input">
+                <dx-text-box placeholder=""
+                name="confirmPIN"
+                [(value)]="input.confirmPIN"
+                mode="password"
+                class="custom-textbox"
+                (keyup.enter)="sendChangePIN()"
+              ></dx-text-box>
+            </div>
+          </div>
+          <div class="button-container">
+              <dx-button 
+                #buttonHeader 
+                type="Text"
+                (onClick)="sendChangePIN()"
+                [elementAttr]="{ class: 'button-custom' }">
+                    Submit
+              </dx-button>
+          </div>
+        </div>
+      <div fxFill class="keterangan" >
+        Ketentuan perubahan Password & PIN KE Trade PRO:<br/><br/>
+        1. Minimum terdiri dari 8 (delapan) karakter dan maksimum 20 (dua puluh) karakter<br/>
+        2. Berisi kombinasi huruf dan angka. Contoh: abcd1234<br/>
+        <br/>
+        Mohon melakukan perubahan Password dan PIN secara berkala untuk menjaga kerahasiaan rekening online Trading KE Trade PRO Bapak/Ibu.
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill style = "border-top: solid 1px white;"> 
+    <app-footer></app-footer>
+  </div>
+</div>

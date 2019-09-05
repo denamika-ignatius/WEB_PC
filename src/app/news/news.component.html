@@ -1,0 +1,141 @@
+ <div fxLayout='column' fxFill >
+    <div fxFlex="70px " fxFill> 
+        <app-header></app-header>
+      </div>
+  <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: black" > 
+    <div fxLayout='column' fxFill > 
+      <div fxFlex="45px" fxFill>
+          <dx-tabs 
+          #apiTabs
+          [items]="tabs"
+          [selectedIndex]="0"
+          (onItemClick)="clickSelectTab($event)"
+          itemTemplate="listItem"
+          height="100%"
+          class="custom-tabs"
+        >
+        <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index">
+            <div *ngIf="selectTab==itemData.display" style="vertical-align: middle;display: flex;align-items: center;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+            <div *ngIf="selectTab!=itemData.display" style="vertical-align: middle;display: flex;align-items: center;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+          </div>
+        </dx-tabs>
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='Announcement'">  
+        <dx-data-grid 
+          id="gridContainer"
+          rowAlternationEnabled="true" 
+          [showRowLines]="false"
+          [columnAutoWidth]="true"
+          (onCellClick)="onCellClick($event)"
+          [dataSource]="announcementListData"
+          [showBorders]="false"
+          height="100%">   
+          
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>
+          <dxi-column dataField="DateDisplay" caption="Date" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="TimeDisplay" caption="Time" cellTemplate = "cellTemplateText" ></dxi-column>
+          <!-- <dxi-column dataField="Subject" caption="Subject"></dxi-column> -->
+          <dxi-column dataField="Title" caption="Title" cellTemplate = "cellTemplateText" ></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+        </dx-data-grid>       
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='Announcement'" class="dx-header-row" style="overflow: auto; padding-left: 10px; padding-right: 5px ">  
+        <p [innerHTML]="announcementData"> </p>  
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='News'">
+
+        <dx-data-grid 
+          id="gridContainer"
+          rowAlternationEnabled="true" 
+          [showRowLines]="false"
+          [columnAutoWidth]="true"
+          (onCellClick)="onCellClick($event)"
+          [dataSource]="newsListData"
+          [showBorders]="false"
+          height="100%">      
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>
+          <dxi-column dataField="DateDisplay" caption="Date" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="TimeDisplay" caption="Time" cellTemplate = "cellTemplateText" ></dxi-column>
+          <!-- <dxi-column dataField="Source" caption="Source"></dxi-column> -->
+          <dxi-column dataField="Title" caption="Title" cellTemplate = "cellTemplateText"></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+        </dx-data-grid>      
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='News'" class="dx-header-row" style="overflow: auto; padding-left: 10px; padding-right: 5px ">
+        <p [innerHTML]="newsData"> </p>  
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='IDX News'" > 
+        <dx-data-grid 
+          id="gridContainer"
+          rowAlternationEnabled="true" 
+          [showRowLines]="false"
+          [columnAutoWidth]="true"
+          (onCellClick)="onCellClick($event)"
+          [dataSource]="idxListData"
+          [showBorders]="false"
+          height="100%">      
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>
+          <dxi-column dataField="DateDisplay" caption="Date" cellTemplate = "cellTemplateText"></dxi-column>
+          <dxi-column dataField="TimeDisplay" caption="Time" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Subject" caption="Subject" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Title" caption="Title" cellTemplate = "cellTemplateText" ></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+        </dx-data-grid>    
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='IDX News'" class="dx-header-row" style="overflow: auto; padding-left: 10px; padding-right: 5px "> 
+        <p [innerHTML]="idxData"> </p>  
+      </div>
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='Research News'">
+           
+        <dx-data-grid 
+          id="gridContainer"
+          rowAlternationEnabled="true" 
+          [showRowLines]="false"
+          [columnAutoWidth]="true"
+          (onCellClick)="onCellClick($event)"
+          [dataSource]="researchListData"
+          [showBorders]="false"
+          height="100%">   
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-scrolling mode="infinite"></dxo-scrolling>
+          <dxo-sorting mode="none"></dxo-sorting>
+          <dxi-column dataField="DateDisplay" caption="Date" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="TimeDisplay" caption="Time" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Source" caption="Source" cellTemplate = "cellTemplateText" ></dxi-column>
+          <dxi-column dataField="Title" caption="Title" cellTemplate = "cellTemplateText" ></dxi-column> 
+          <dxi-column dataField="Url" caption="Attachment" cellTemplate="cellTemplateAttachment"></dxi-column> 
+
+          <div *dxTemplate="let cell of 'cellTemplateText'">
+            <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+          </div>
+          <div *dxTemplate="let cell of 'cellTemplateAttachment'">
+            <button (click)='openAttachment(cell.text);'>Open</button> 
+          </div>
+        </dx-data-grid>     
+              
+      </div> 
+      <div fxFlex="calc(50%-45px)" fxFill *ngIf="selectTab=='Research News'" class="dx-header-row" style="overflow: auto; padding-left: 10px; padding-right: 5px ">
+        <p [innerHTML]="researchData"> </p>  
+      </div> 
+
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill style = "border-top: solid 1px white;"> 
+    <app-footer></app-footer>
+  </div>
+</div>

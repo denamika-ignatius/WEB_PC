@@ -1,0 +1,383 @@
+.buttonHeader{
+    height: 60px;
+    width: 60px;
+    padding: 0px;
+}
+#headerBuy.dx-button{
+    height: 48px;
+    width: 48px;
+}
+#headerBuy.dx-button:hover{
+    height: 48px;
+    width: 48px;    
+    background-image: url("../../assets/button/buy-hover.png");
+}
+#headerOrder.dx-button{
+    height: 48px;
+    width: 48px;
+}
+#headerSell.dx-button{
+    height: 48px;
+    width: 48px;
+}
+#headerSell.dx-button:hover{
+    height: 48px;
+    width: 48px;    
+    background-image: url("../../assets/button/sell-hover.png");
+}
+ 
+ #menuHeader.dx-button {
+    background-color: #262626;
+    height: 52px;
+    width: 52px;
+    padding: 0px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0;
+ }
+ #menuHeader.dx-button .myAccount{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .myAccount:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/MyAccount2.png");
+ }
+
+ #menuHeader.dx-button .marketInfo{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .marketInfo:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/MarketInfo.png");
+ }
+
+ #menuHeader.dx-button .quote{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .quote:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/Quote2.png");
+ }
+
+ #menuHeader.dx-button .ranking{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .ranking:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/Ranking2.png");
+ }
+ #menuHeader.dx-button .stockSummary{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .stockSummary:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/StockSummary2.png");
+ }
+
+ #menuHeader.dx-button .brokerSummary{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .brokerSummary:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/BrokerSummary2.png");
+ }
+
+ #menuHeader.dx-button .chart{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .chart:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/Chart2.png");
+ }
+
+ #menuHeader.dx-button .news{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .news:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/News2.png");
+ }
+
+ #menuHeader.dx-button .option{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .option:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/Options2.png");
+ }
+
+ #menuHeader.dx-button .logout{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+ }
+ #menuHeader.dx-button .logout:hover{
+    height: auto;
+    width: auto;
+    position: absolute;
+    padding: 0px;
+    background-image: url("../../assets/button/Logout2.png");
+ }
+
+.logoCenter{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+// .dx-button .dx-icon { 
+//     margin-right: 0px;
+//     padding: 0px;
+// }
+
+// .dx-button-has-icon .dx-button-content {
+//     padding: 0px;
+// }
+.dx-button-has-text .dx-button-content {
+    padding: 0px ;
+}
+
+.dx-button-has-text .dx-button-content {
+    padding: 0px ;
+}
+
+.new-text{
+    font-family: 'Trebuchet MS';
+    font-weight: 100;
+    font-size: 1.3em;
+}
+
+.new-head-text{
+    font-family: "Trebuchet MS" ; 
+    font-weight: 400;
+    padding-top: 18px;
+    margin-bottom: 1%;
+    border: 0;
+}
+
+.new-sub-head-textUpDown{
+    font-family: "Trebuchet MS";
+    font-weight: 100;
+    padding-top: 19px;
+    margin-bottom: 1%;
+    border: 0;
+    font-size: 1.3em;
+    margin-left: 5px;
+}
+
+.new-sub-head-textFirst{
+    font-family: "Trebuchet MS";
+    font-weight: 100;
+    padding-top: 10px;
+    margin-bottom: 1%;
+    border: 0;
+    font-size: 1.3em;
+    margin-left: 10px;
+}
+
+.new-sub-head-text{
+    font-family: "Trebuchet MS";
+    font-weight: 100;
+    padding-top: 10px;
+    margin-bottom: 1%;
+    border: 0;
+    font-size: 1.3em;
+    margin-left: 20px
+}
+
+.new-sub-head-innerFirstFirst-text{
+    padding-left: 8px;
+    padding-top: 8px; 
+    padding-bottom: 5px;
+    text-align: start; 
+    font-family: Trebuchet MS; 
+    border-top: solid 2px #595959; 
+    border-left: solid 2px #595959; 
+    font-weight: 100;
+}
+
+.new-sub-head-innerFirstSecond-text{
+    padding-top: 8px ;
+    padding-right: 8px;
+    padding-bottom: 5px; 
+    font-family: Trebuchet MS; 
+    border-top: solid 2px #595959; 
+    border-right: solid 2px #595959; 
+    font-weight: 100;
+    margin-right: 15px;
+    text-align: end ;
+}
+
+.new-sub-head-innerSecondFirst-text{
+    padding-bottom: 8px;
+    padding-left: 8px;
+    text-align: start; 
+    font-family: Trebuchet MS; 
+    border-left: solid 2px #595959; 
+    border-bottom: solid 2px #595959; 
+    font-weight: 100;
+}
+
+.new-sub-head-innerSecondSecond-text{
+    padding-right: 8px;
+    padding-bottom: 8px;
+    text-align: end ;
+    font-family: Trebuchet MS; 
+    border-bottom: solid 2px #595959; 
+    border-right: solid 2px #595959; 
+    font-weight: 100;
+    margin-right: 15px;
+    text-align: end ;
+}
+
+.new-number{
+    font-family: "Trebuchet MS";
+    font-weight: 400;
+    padding-top: 18px;
+    margin-left: 3px;
+}
+
+.new-number-text{
+    font-weight: 100;
+    font-family: "Trebuchet MS";
+    margin-right: 17px;
+    border: 0;
+    text-align: end ;
+}
+    
+.new-menu-textActive{
+    color: #FFC000;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    padding-top: 10px;
+    font-family: "Trebuchet MS";
+    font-size: 1.2em;
+    font-weight: 100;
+}
+.new-menu-textInactive{
+    color: #ffffff;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    vertical-align:  middle;
+    padding-top: 10px;
+    font-family: "Trebuchet MS";
+    font-size: 1.2em;
+    font-weight: 100;
+}
+
+.new-menu-text{
+    background-color: #595959 ;
+    border-right: solid 1.5px #262626; 
+    width : auto;
+    height: 32.9px;
+    text-align: center;
+}
+.new-menu-text :hover{
+    font-weight: 50;
+    font-family: "Trebuchet MS";
+    background-color: #595959 ;
+    text-align: center;
+    color: #FFC000
+}
+
+.dx-button.dx-state-active.dx-state-focused{
+    color: #FFC000
+}
+.new-alert-box{
+    background-color: #595959 ; 
+    width: 120px;
+    height: 40px; 
+    border-radius: 2px;
+    padding: 5px; 
+}
+.new-alert-box-middle{ 
+    background-color: #595959 ; 
+    width: 120px;
+    height: 40px; 
+    border-radius: 2px;
+    padding: 5px;  
+    resize: vertical;
+    overflow: auto;
+}  
+.new-alert-box-container{
+    width: 120px;
+    height: 40px; 
+    border-radius: 2px;
+    padding: 5px; 
+}
+.new-alert-box-container .new-alert-box-small{
+    display: inline-block;
+    padding:3px 6px;
+    background-color: #595959 ; 
+    text-align: center;
+    height:30px;
+}
+
+.text-tahoma{
+    font-family: 'Tahoma';
+    font-size: 10px;
+    
+}
+/*----RUSMAN----*/
+.override{
+    margin-left:-20px !important;
+}

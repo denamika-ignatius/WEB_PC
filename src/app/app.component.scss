@@ -1,0 +1,103 @@
+.buttonOption{
+    height: 100px;
+    width: 100px;
+}
+
+.label-value{
+    display: inline-block;
+    width:100%;
+    border:1px solid #666;
+    background-color:#222;
+    color:#999;
+    padding:4px;
+}
+
+.label{
+    width:100%;
+    color:#fff;
+    padding:4px;
+}
+
+.right{
+    text-align:right;
+}
+
+.input-price{
+    width:100%;
+    border:1px solid #666;
+    padding:4px;
+    height:28px;
+}
+
+.input-price input[type=text]{
+    padding:0px;
+}
+
+.amend-btn{
+    //background-color:#333;
+    background-image: linear-gradient(#444,#222);
+    color:#fff;
+    border:1px solid #333;
+    width:120px;
+}
+
+.product-desc{
+    border:1px solid #666;
+    background-color:#222;
+    padding:4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width:100%;
+}
+
+::ng-deep .background-order-status .dx-overlay-content {  
+    background: #262626 !important;  
+}
+
+::ng-deep .background-overlay .dx-overlay-content {  
+    background: #262626 !important;  
+}
+
+::ng-deep .background-overlay .dx-overlay-content .dx-popup-title {  
+    background: #262626 !important;  
+    height: 0px;
+    min-height: 0px;
+}
+
+::ng-deep .background-overlay .dx-overlay-content .dx-popup-content {  
+    background: #262626 !important;  
+    padding-left: 10px;
+    padding-top : 20px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+::ng-deep .background-overlay .dx-overlay-content .dx-icon .dx-icon-close::before {  
+    background: #262626 !important;  
+    position: absolute;
+    top: 0%;
+    width: 10px;
+    height: 10px;
+}
+
+::ng-deep .dx-texteditor-input-container {
+    text-align: end;
+}
+
+.popup-text{
+    font-family: 'Trebuchet MS';
+    font-weight: 400;
+    font-size: 1.1em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.popup-box{
+    font-family: 'Trebuchet MS';
+    background-color: #000; 
+}
+
+::ng-deep .popupExpired .dx-overlay-content {  
+    background: #262626 !important;  
+}

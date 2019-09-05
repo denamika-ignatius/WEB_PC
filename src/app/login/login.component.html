@@ -1,0 +1,38 @@
+<div class="containerLogin" id="loginPage">
+  <div class="centerImage">
+    <img src="./assets/fullscreen2_BLANK.jpg" alt="background" style="width: 100%; height: 100%;"  >
+    <div class ="footerReal">
+        <p class="text" >Ver 0.0.01</p>
+    </div>
+  </div>
+  <div  class="center">
+    <div class="form-3">
+      <p >
+          <label ></label>
+          <input style="padding-left: 10px" type="text" name="login" id="login" placeholder="Username" [(ngModel)]="input.username" (input)="updateUsername($event)" (keyup.enter)="enterUsername($event)">
+      </p>
+      <p >
+          <label ></label>
+          <input style="padding-left: 10px" type="password" name="password" id="password" placeholder="Password" [(ngModel)]="input.password" (input)="updatePassword($event)" (keyup.enter)="enterPassword($event)">
+          <input type ="image" src= "./assets/arrow.jpeg" (click)="login_click()">
+      </p>
+      <!-- <p class="clearfix">
+          <input type="checkbox" name="remember" id="remember" [(ngModel)]="input.rememberMe" (click)="handleClickRememberme($event)">
+          <label for="remember">Remember me</label>
+      </p> -->
+      <!-- <p class="clearfix">
+          <input type="submit" name="submit" (click)="login_click()">
+      </p>        -->
+    </div>
+  </div>
+  <div class="centerOpenForget">
+    <a class ="textLabelOpen"> <u>Open an Account</u> </a>
+    <a class ="textLabelForgot" > <u>Forgot Password </u> </a>
+  </div>
+  <div class="centerMayBank">
+    <a class="textCenter"><u>Maybank Kim Eng Office</u></a>
+  </div>
+  <div class="mayBank">
+    <a class="mayBankText"><u> PC Id</u> </a>
+  </div>
+</div>

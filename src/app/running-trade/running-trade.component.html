@@ -1,0 +1,57 @@
+<div fxLayout='column' fxFill >
+  <div fxFlex="100% " fxFill (window:resize)="onResize($event)" (onload)="onLoad($event)" id="gridContainerRTX"> 
+ 
+    <table style="border-spacing: 0; border-collapse: collapse;" no-padding width="100%">
+      <tr class="g-header-table-background" style="height: 18px;">
+          <td width="10%" style="text-align: center">Time</td>
+          <td width="17%" style="padding-left: 4px">Code</td>
+          <td width="3%" style = "text-align: center">Mkt</td>
+          <td width="15%" style="text-align: end">Price</td>
+          <td width="13%" style="text-align: end">Chg</td>
+          <td width="12%" style="text-align: end">Chg(%)</td>
+          <td width="10%" style="text-align: end">Vol</td>
+          <td width="5%" style="text-align: center">BT</td>
+          <td width="5%" style="text-align: center">B</td>
+          <td width="5%" style="text-align: center">S</td>
+          <td width="5%" style="text-align: center">ST</td> 
+      </tr>
+      <tr *ngFor="let item of displayData.runningTrade;let i = index;" [ngClass]="RTSetBg(i)" style="height: 18px;">
+        <!-- <td [ngClass]="global.setColorTime(item.Page)">  -->
+        <td style="color:rgb(170,170,170);"> 
+          {{global.timeFormat(item.TradeTime)}}
+        </td>
+        <td [ngClass]="global.setColorStock(item.ProductCode)" style="padding-left: 4px">
+          {{item.ProductCode}}
+        </td>
+        <td style="padding-left: 4px; color:rgb(170,170,170);">
+          {{item.BoardCode}}
+        </td>
+        <td [ngClass]="global.colorFormat(item.Change)" style="text-align: end">
+          {{global.numberFormat(item.Price,0)}}
+        </td>
+        <td [ngClass]="global.colorFormat(item.Change)" style="text-align: end">
+          {{global.numberSignFormat(item.Change,0)}}
+        </td>
+        <td [ngClass]="global.colorFormat(item.Change)" style="text-align: end">
+          {{global.numberSignFormat(item.ChangePercent,2)}}
+        </td>
+        <td [ngClass]="global.setExecuteBS(item.Execute)" style="text-align: end">
+          {{global.numberFormat(item.Lot)}}
+        </td>
+        <td  [ngClass]="global.setBrokerTypeColor(item.BuyerType)" style="text-align: center">
+          {{item.BuyerType}}
+        </td>
+        <td [ngClass]="global.colorBrokerCode(item.BrokerBuy)" style="text-align: center">
+          {{item.BrokerBuy}}
+        </td>
+        <td [ngClass]="global.colorBrokerCode(item.BrokerSell)" style="text-align: center">
+          {{item.BrokerSell}}
+        </td>
+        <td  [ngClass]="global.setBrokerTypeColor(item.SellerType)" style="text-align: center">
+          {{item.SellerType}}
+        </td>
+      </tr>
+    </table> 
+ 
+  </div>
+</div>

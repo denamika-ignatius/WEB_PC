@@ -1,0 +1,44 @@
+<div fxLayout='column' fxFill>
+  <div fxFlex="70px " fxFill> 
+    <app-header></app-header>
+  </div>
+  <div fxFlex="calc(100%-120px-120px)" fxFill  style="background-color: black"> 
+    <div fxLayout='row' fxFill>
+      <div fxFlex="65%" fxFill>
+
+        <div fxFlex="50%" fxFill style="border-right: 2px solid #404040;"> 
+          <div fxLayout='column' fxFill >
+            <div fxFlex="50%" fxFill> <!-- Box 1 -->
+              <app-stock-quote
+              [quoteId]="1"
+              ></app-stock-quote>
+            </div>
+            <div fxFlex="50%" fxFill> <!-- Box 3 -->
+              <app-stock-quote
+              [quoteId]="3"></app-stock-quote>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="50%" fxFill style="border-right: 2px solid #404040;"> 
+            <div fxLayout='column' fxFill >
+                <div fxFlex="50%" fxFill> <!-- Box 2 -->
+                  <app-stock-quote
+                  [quoteId]="2"></app-stock-quote>
+                </div>
+                <div fxFlex="50%" fxFill> <!-- Box 4 -->
+                  <app-stock-quote
+                  [quoteId]="4"></app-stock-quote>
+                </div>
+            </div>
+        </div>
+
+      </div> 
+      <div fxFlex="35%" fxFill>
+        <app-running-trade></app-running-trade>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill> 
+    <app-footer></app-footer>
+  </div>
+</div>

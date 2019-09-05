@@ -1,0 +1,419 @@
+<div fxLayout='column' fxFill >
+    <div fxFlex="70px " fxFill> 
+      <app-header></app-header>
+    </div>
+  <div fxFlex="calc(100%-120px-20px)" fxFill  style="background-color: #404040"> 
+    <div fxLayout='column' fxFill >
+      <div fxFlex="35px" style="border-bottom:3px solid #404040;" fxFill>  
+        <div fxLayout='row' fxFill >
+            <div fxFLex = "100px" style = "padding: 7px 5px; padding-top:9px; background-color: #7F7F7F;"  >
+              <a> Broker Code </a>
+            </div>
+            <div fxFlex="300px" > 
+                <dx-select-box
+                  style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px "
+                  [inputAttr]="{ id: 'inputBoxID' }"
+                  (onOpened)="box_onOpened($event)"
+                  [dataSource]="dsBrokerList"
+                  [(value)]="brokerInput['code']" 
+                  (onValueChanged)="box_onChange($event)"
+                  [(placeholder)]="brokerInput['code']"
+                  displayExpr="BrokerFullName"
+                  valueExpr="BrokerCode"
+                  spellcheck="true"
+                  searchMode="contains"
+                  searchExpr="BrokerCode"
+                  minSearchLength="0"
+                  showDataBeforeSearch="true"
+                  searchEnabled="true"
+                  >
+                </dx-select-box> 
+            </div>
+            <div fxFlex = "100px">
+              <div *ngIf="selectTab=='Summary' || selectTab=='Trade Detail'" style = "height:auto; margin-left: 5px; background-color: #7F7F7F; text-align: center;   padding: 8px 8px; padding-top:8px; border-bottom: solid 1.5px #7F7F7F; " >
+              <a> Filter Stock </a>
+              </div>
+              <div *ngIf="selectTab=='Trade Detail'" style="padding-top: 5px" >
+                <dx-button
+                  style = "background-color: #8497b0;"
+                  type = "Text"
+                  text = "More"
+                  (onClick) ="refreshButton_Clicked_TradeDetail($event)">
+              </dx-button>
+            </div>
+            </div>
+            <div fxFlex ="200px"  >
+                <div *ngIf="selectTab=='Summary' || selectTab=='Trade Detail'">
+                <dx-select-box  
+                style = "background-color: #404040; border: solid 3px #7F7F7F; padding-left: 5px;"
+                placeholder="Enter Code Here"
+                [dataSource]="dsProductCode"
+                (onValueChanged)="filterProductChange($event)"
+                displayExpr="ProductCodeDisplay"
+                valueExpr="ProductCode"
+                spellcheck="true"
+                searchMode="contains"
+                searchExpr="ProductCode"
+                minSearchLength="0"
+                showDataBeforeSearch="true"
+                searchEnabled="true"
+                [(value)]="brokerInput['filterCode']" 
+                > 
+               </dx-select-box>  
+               </div>
+            </div>
+            <div fxFlex = "calc(100%- 700px)" style="text-align:right;padding-right:5px;">
+                <div *ngIf="selectTab=='Summary' || selectTab == 'History' || selectTab == 'Transaction Value'">
+                  <dx-date-box
+                      displayFormat="d MMM yyyy"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [(value)]="startDate"
+                      (onValueChanged)="dateBoxStart_valueChanged($event)"
+                      style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff;  display:inline-block; height:100%; background-color:black; padding-left: 5px; "
+                  >
+                  </dx-date-box> 
+                  <div style="display:inline-block;">&nbsp;&nbsp;To&nbsp;&nbsp;</div> 
+                  <dx-date-box
+                      displayFormat="d MMM yyyy"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [(value)]="endDate"
+                      (onValueChanged)="dateBoxEnd_valueChanged($event)"
+                      style="border-left:2px solid #999; border-top:2px solid #999; border-bottom:2px solid #fff; border-right:2px solid #fff; display:inline-block; height:100%; background-color: black; padding-left: 5px; margin-right: 2px;"
+                  >
+                  </dx-date-box>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div fxFLex = "2px">
+        
+      </div>
+      <div fxFlex="calc(100%-40px)" fxFill  style="background-color: black">  
+        <div fxLayout='column' fxFill >
+          <div fxFlex=" 45px" style="background-color:#404040;" fxFill> 
+            <div fxLayout="row" fxFill>
+              <div fxFlex="40%" fxFill>
+                <dx-tabs 
+                  [items]="tabs"
+                  [selectedIndex]="0"
+                  (onItemClick)="clickSelectTab($event)"
+                  itemTemplate="listItem"
+                  height="100%"
+                  width="100%"
+                  class="custom-tabs"
+                  >
+                  <div *dxTemplate="let itemData of 'listItem'; let itemIndex = index">
+                    <div *ngIf="selectTab==itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.act}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+                    <div *ngIf="selectTab!=itemData.display" style="vertical-align: middle;display: flex;align-items: center; text-transform: capitalize;"><!--<img src="{{itemData.url}}" alt="" width="20px" height="20px">&nbsp;-->  {{itemData.display}} </div>
+                  </div> 
+                </dx-tabs>
+              </div>
+              <div fxFlex="60%" fxFill>
+                  
+              </div>
+            </div>
+          </div>
+          <div fxFlex="calc(100%-45px)" *ngIf="selectTab=='Summary'">
+                   <dx-data-grid 
+                    #targetDataGrid
+                    id="gridContainer"
+                    rowAlternationEnabled="true" 
+                    [showRowLines]="false"
+                    [showColumnLines]="false"
+                    [columnAutoWidth]="false"
+                    (onCellClick)="onCellClick($event)"
+                    [dataSource]="summaryData"
+                    [allowColumnResizing]="true"
+                    [showBorders]="false"  
+                    [allowColumnReordering]="true"
+                    (onToolbarPreparing)="onToolbarPreparing($event)"
+                    height="100%">     
+                    <dxo-selection
+                      mode="single"
+                      [allowSelectAll]="false"
+                      [deferred]="false">
+                    </dxo-selection>
+                    
+                    <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+                    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                    <dxo-scrolling mode="infinite"></dxo-scrolling>
+                    <dxo-sorting mode="none"></dxo-sorting>
+                     <dxo-load-panel [enabled]="false"></dxo-load-panel>
+                    <dxi-column dataField="No" caption="No" [allowReordering]="false" alignment="left" [width] = "40" cellTemplate="cellTemplateText"></dxi-column>
+                    <dxi-column dataField="ProductCodeDisplay" caption="Code" cellTemplate="cellTemplateStockCode"></dxi-column>
+                    <dxi-column dataField="BuyValue" alignment="right"  caption="BVal" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                    <dxi-column dataField="BuyLot"  alignment="right" caption="BVol" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                    <dxi-column dataField="BuyFreq" alignment="right" caption="BFreq" cellTemplate="cellTemplateBKMBT" ></dxi-column>
+                    <dxi-column dataField="SellValue" alignment="right"  caption="SVal" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                    <dxi-column dataField="SellLot" alignment="right"  caption="SVol" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                    <dxi-column dataField="SellFreq" alignment="right" caption="SFreq" cellTemplate ="cellTemplateSKMBT"></dxi-column>
+                    <dxi-column dataField="NetValue" alignment="right"  caption="NVal" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                    <dxi-column dataField="NetLot" alignment="right"  caption="NVol" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                    <dxi-column dataField="NetFreq" alignment="right" caption="NFreq" cellTemplate="cellTemplateNKMBT"></dxi-column>
+                    <dxi-column dataField="BuyForeignValue" alignment="right" caption="BFgnVal" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                    <dxi-column dataField="BuyForeignLot" alignment="right" caption="BFgnLot" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                    <dxi-column dataField="BuyForeignFreq" alignment="right" caption="BFgnFreq" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                    <dxi-column dataField="SellForeignValue" alignment="right" caption="SFgnVal" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                    <dxi-column dataField="SellForeignLot" alignment="right" caption="SFgnLot" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                    <dxi-column dataField="SellForeignFreq" alignment="right" caption="SFgnFreq" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                    <dxi-column dataField="TotalValue" alignment="right"  caption="TVal" cellTemplate="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="TotalLot" alignment="right" caption="TLot" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="TotalFreq" alignment="right" caption="TFreq" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="FgnTotalValue" alignment="right" caption="FgnTVal" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="FgnTotalLot" alignment="right" caption="FgnTLot" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="FgnTotalFreq" alignment="right" caption="FgnTFreq" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+
+                    <div *dxTemplate="let cell of 'cellTemplateText'">
+                      <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                    </div>
+                    <div *dxTemplate="let cell of 'cellTemplateStockCode'">
+                      <div [ngClass]="global.setColorStock(cell.data.ProductCode)">{{cell.text}}</div> 
+                    </div>
+                    <div *dxTemplate="let cell of 'cellTemplateTKMBT'">
+                      <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                    </div>
+                    <div *dxTemplate="let cell of 'cellTemplateBKMBT'">
+                      <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                    </div>
+                    <div *dxTemplate="let cell of 'cellTemplateSKMBT'">
+                      <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                    </div>
+                    <div *dxTemplate="let cell of 'cellTemplateNKMBT'">
+                      <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                    </div>
+                  </dx-data-grid>  
+ 
+          </div>
+          <div fxFlex="calc(100%-45px)" *ngIf="selectTab=='Trade Detail'">
+            <dx-data-grid 
+              #targetDataGrid
+              rowAlternationEnabled="true" 
+              id="gridContainer"
+              [showRowLines]="false"
+              [showColumnLines]="false"
+              [columnAutoWidth]="false"
+              (onCellClick)="onCellClick($event)"
+              [dataSource]="tradeDetailData"
+              [allowColumnResizing]="true"
+              [showBorders]="false"  
+              [allowColumnReordering]="true"
+              height="100%">     
+              <dxo-selection
+                mode="single"
+                [allowSelectAll]="false"
+                [deferred]="false">
+              </dxo-selection>
+              
+              <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+              <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+              <dxo-load-panel [enabled]="true"></dxo-load-panel>
+              <dxo-scrolling mode="infinite"></dxo-scrolling>
+              <dxo-sorting mode="none"></dxo-sorting>
+              <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+              <dxi-column dataField="TradeTimeDisplay" alignment="center"  caption="Time" cellTemplate = "cellTemplateText" ></dxi-column>
+              <dxi-column dataField="TradeNo" alignment="center"  caption="TradeNo" cellTemplate = "cellTemplateText"></dxi-column>
+              <dxi-column dataField="ProductCode" caption="Stock" cellTemplate="cellTemplateStockCode"></dxi-column>
+              <dxi-column dataField="BuyerType" alignment="center"  caption="BT" cellTemplate="cellTemplateBrokerType" ></dxi-column>
+              <dxi-column dataField="BrokerBuyerCode" alignment="center"  caption="B" cellTemplate="cellTemplateBroker"></dxi-column> 
+              <dxi-column dataField="BrokerSellerCode" alignment="center"  caption="S" cellTemplate="cellTemplateBroker"></dxi-column> 
+              <dxi-column dataField="SellerType" alignment="center"  caption="ST"  cellTemplate="cellTemplateBrokerType"></dxi-column> 
+              <dxi-column dataField="Price" caption="Price" cellTemplate="cellTemplatePrice" ></dxi-column> 
+              <dxi-column dataField="Change" caption="Chg" cellTemplate="cellTemplatePrice-min-plus"></dxi-column> 
+              <dxi-column dataField="ChangePercent" caption="(%)"  alignment="right" cellTemplate="cellTemplateChgPct"></dxi-column> 
+              <dxi-column dataField="Lot" caption="Vol" cellTemplate="cellTemplateNumber"></dxi-column> 
+              <dxi-column dataField="BuyOrderNo" alignment="center"  caption="BuyTradeNo" cellTemplate = "cellTemplateText"></dxi-column> 
+              <dxi-column dataField="SellOrderNo" alignment="center"  caption="SellTradeNo" cellTemplate = "cellTemplateText" ></dxi-column> 
+
+              <div *dxTemplate="let cell of 'cellTemplateText'">
+                <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplateStockCode'">
+                <div [ngClass]="global.setColorStock(cell.text)">{{cell.text}}</div> 
+              </div>              
+              <div *dxTemplate="let cell of 'cellTemplateBrokerType'">
+                <div [ngClass]="global.setBrokerTypeColor(cell.text)">{{cell.text}}</div> 
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplateBroker'">
+                <div [ngClass]="global.colorBrokerCode(cell.text)">{{cell.text}}</div> 
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplatePrice-min-plus'">
+                <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text)}}</div>  
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplatePrice'">
+                <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberFormat(cell.text,0)}}</div> 
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplateChgPct'">
+                <div [ngClass]="global.colorFormat(cell.data.Change)">{{global.numberSignFormat(cell.text)}}</div> 
+              </div>
+              <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                <div style = "color : rgb(170,170,170) ">{{global.numberFormat(cell.text,0)}}</div> 
+              </div>
+              
+            </dx-data-grid>    
+          </div>
+          <div fxFlex="calc(100%-45px)" *ngIf="selectTab=='History'">
+ 
+                      <dx-data-grid 
+                      #targetDataGrid
+                      rowAlternationEnabled="true" 
+                      id="gridContainer"
+                      [showRowLines]="false"
+                      [showColumnLines]="false"
+                      [columnAutoWidth]="false"
+                      (onCellClick)="onCellClick($event)"
+                      [dataSource]="historyData"
+                      [allowColumnResizing]="true"
+                      [showBorders]="false"  
+                      [allowColumnReordering]="true"
+                      (onToolbarPreparing)="onToolbarPreparing($event)"
+                      height="100%">     
+                      <dxo-selection
+                        mode="single"
+                        [allowSelectAll]="false"
+                        [deferred]="false">
+                      </dxo-selection>
+                      
+                      <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+                      <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                      <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                      <dxo-scrolling mode="infinite"></dxo-scrolling>
+                      <dxo-sorting mode="none"></dxo-sorting>
+                      <!-- <dxo-load-panel [enabled]="false"></dxo-load-panel>       -->
+                      <dxi-column dataField="DateDisplay" alignment="center"  caption="Date" cellTemplate = "cellTemplateText" ></dxi-column> 
+                      <dxi-column dataField="BrokerBuyValue" caption="BVal" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                      <dxi-column dataField="BrokerBuyLot" caption="BVol" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                      <dxi-column dataField="BrokerBuyFreq" caption= "BFreq" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                      <dxi-column dataField="BrokerSellValue" caption="SVal" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                      <dxi-column dataField="BrokerSellLot" caption="SVol" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                      <dxi-column dataField="BrokerSellFreq" caption="SFreq" cellTemplate ="cellTemplateSKMBT"></dxi-column>
+                      <dxi-column dataField="NetValue" caption="NVal" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                      <dxi-column dataField="NetLot" caption="NVol" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                      <dxi-column dataField="NetFreq" alignment="right" caption="NFreq" cellTemplate="cellTemplateNKMBT"></dxi-column>
+                      <dxi-column dataField="TotalValue" caption="TVal" cellTemplate="cellTemplateTKMBT"></dxi-column> 
+                      <dxi-column dataField="TotalLot" caption="TVol" cellTemplate="cellTemplateTKMBT"></dxi-column> 
+                      <dxi-column dataField="TotalFreq" alignment="right" caption="TFreq" cellTemplate="cellTemplateTKMBT" ></dxi-column>
+
+                      <div *dxTemplate="let cell of 'cellTemplateText'">
+                        <div style = "color : rgb(170,170,170) ">{{cell.text}}</div>
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateNumber'">
+                        <div >{{global.kmbtFormat(cell.text,2)}}</div> 
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateTKMBT'">
+                        <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateTKMBT'">
+                        <div class="f-blue">{{global.kmbtFormat(cell.text,0)}}</div> 
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateBKMBT'">
+                        <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateSKMBT'">
+                        <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                      </div>
+                      <div *dxTemplate="let cell of 'cellTemplateNKMBT'">
+                        <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                      </div>
+                    </dx-data-grid>     
+          </div>
+          <!-- <div fxFlex="calc(100%-45px)" *ngIf="selectTab=='Transaction Value'">
+            <dx-data-grid 
+                  #targetDataGrid
+                  id="gridContainerSmallHeader"
+                  rowAlternationEnabled="true" 
+                  [showRowLines]="false"
+                  [showColumnLines]="false"
+                  [columnAutoWidth]="false"
+                  (onCellClick)="onCellClick($event)"
+                  [dataSource]="transactionValueData"
+                  [allowColumnResizing]="true"
+                  [showBorders]="false"  
+                  [allowColumnReordering]="true"
+                  (onToolbarPreparing)="onToolbarPreparing($event)"
+                  height="100%">     
+                  <dxo-selection
+                    mode="single"
+                    [allowSelectAll]="false"
+                    [deferred]="false">
+                  </dxo-selection>
+                  
+                  <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+                  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                  <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                  <dxo-scrolling mode="infinite"></dxo-scrolling>
+                  <dxo-sorting mode="none"></dxo-sorting>
+                  <dxo-load-panel [enabled]="false"></dxo-load-panel>
+
+                  <dxi-column dataField="No" caption="No" [allowReordering]="false"></dxi-column> -->
+                  <!-- Atas Di pake Jagang Di Delete -->
+                  <!--<dxi-column dataField="ProductCodeDisplay" caption="Code" cellTemplate="cellTemplateStockCode"></dxi-column>-->
+                  <!-- Bawah Dipake Jangan Di delete -->
+                  <!-- <dxi-column dataField="Date" alignment="left"  caption="Date" ></dxi-column>
+                  <dxi-column caption="Buy" alignment="center" headerCellTemplate="customHeaderTemplate">
+                    <dxi-column dataField="BuyValue" alignment="right"  caption="BVal" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                    <dxi-column dataField="BuyLot"  alignment="right" caption="BVol" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateBKMBT"></dxi-column> 
+                    <dxi-column dataField="BuyFreq" alignment="right" caption="BFreq" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateBKMBT" ></dxi-column>
+                  </dxi-column>
+                  <dxi-column caption="Sell" alignment="center" headerCellTemplate="customHeaderTemplate">
+                    <dxi-column dataField="SellValue" alignment="right"  caption="SVal" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                    <dxi-column dataField="SellLot" alignment="right"  caption="SVol" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateSKMBT"></dxi-column> 
+                    <dxi-column dataField="SellFreq" alignment="right" caption="SFreq" headerCellTemplate="customSubHeaderTemplate" cellTemplate ="cellTemplateSKMBT"></dxi-column>
+                  </dxi-column>
+                  <dxi-column caption="Total" alignment="center" headerCellTemplate="customHeaderTemplate">
+                    <dxi-column dataField="TotalValue" alignment="right"  caption="TVal" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="TotalLot" alignment="right" caption="TLot" headerCellTemplate="customSubHeaderTemplate" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                    <dxi-column dataField="TotalFreq" alignment="right" caption="TFreq" headerCellTemplate="customSubHeaderTemplate" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                  </dxi-column>
+                  <dxi-column caption="Net" alignment="center" headerCellTemplate="customHeaderTemplate">
+                    <dxi-column dataField="NetValue" alignment="right"  caption="NVal" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                    <dxi-column dataField="NetLot" alignment="right"  caption="NVol" headerCellTemplate="customSubHeaderTemplate" cellTemplate="cellTemplateNKMBT"></dxi-column> 
+                  </dxi-column> -->
+                  <!-- Up Dipake Jangan Di Delete -->
+                  <!--
+                  <dxi-column dataField="NetFreq" alignment="right" caption="NFreq" cellTemplate="cellTemplateNKMBT"></dxi-column>
+                  <dxi-column dataField="BuyForeignValue" alignment="right" caption="BFgnVal" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                  <dxi-column dataField="BuyForeignLot" alignment="right" caption="BFgnLot" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                  <dxi-column dataField="BuyForeignFreq" alignment="right" caption="BFgnFreq" cellTemplate="cellTemplateBKMBT"></dxi-column>
+                  <dxi-column dataField="SellForeignValue" alignment="right" caption="SFgnVal" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                  <dxi-column dataField="SellForeignLot" alignment="right" caption="SFgnLot" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                  <dxi-column dataField="SellForeignFreq" alignment="right" caption="SFgnFreq" cellTemplate="cellTemplateSKMBT"></dxi-column>
+                  
+                  <dxi-column dataField="FgnTotalValue" alignment="right" caption="FgnTVal" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                  <dxi-column dataField="FgnTotalLot" alignment="right" caption="FgnTLot" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                  <dxi-column dataField="FgnTotalFreq" alignment="right" caption="FgnTFreq" cellTemplate ="cellTemplateTKMBT"></dxi-column>
+                  -->
+                  <!-- Bawah Dipake Jangan Di Delete Used -->
+                  <!-- <div *dxTemplate="let info of 'customHeaderTemplate'" style="border-bottom:1px solid #666; padding:5px !important;">
+                      <span>{{info.column.caption}}</span>
+                  </div>
+                  <div *dxTemplate="let info of 'customSubHeaderTemplate'" style="padding-top:5px; padding-bottom:5px;">
+                      <span>{{info.column.caption}}</span>
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateStockCode'">
+                    <div [ngClass]="global.setColorStock(cell.data.ProductCode)">{{cell.text}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateTKMBT'">
+                    <div class="f-blue">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateBKMBT'">
+                    <div [ngClass]="global.colorFormat(1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateSKMBT'">
+                    <div [ngClass]="global.colorFormat(-1)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                  <div *dxTemplate="let cell of 'cellTemplateNKMBT'">
+                    <div [ngClass]="global.colorFormat(cell.text)">{{global.kmbtFormat(cell.text,2)}}</div> 
+                  </div>
+                </dx-data-grid> 
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="40px " fxFill> 
+    <app-footer></app-footer>
+  </div>
+</div>
